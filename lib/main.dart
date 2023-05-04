@@ -3,8 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_template/common_libs.dart';
 import 'package:flutter_template/logic/locale_logic.dart';
-import 'package:flutter_template/router.dart';
-import 'package:flutter_template/ui/app_scaffold.dart';
+import 'package:flutter_template/router/go_router.dart';
+import 'package:flutter_template/ui/common/app_scaffold.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -12,20 +12,28 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   // Start app
+  final container = ProviderContainer();
   registerSingletons();
-  await appLogic.bootstrap();
-  runApp(MyApp());
+
+  await container.read(appLogicProvider).bootstrap();
+
+  runApp(UncontrolledProviderScope(
+    container: container,
+    child: const MyApp(),
+  ));
 
   // Remove splash screen when bootstrap is complete
   FlutterNativeSplash.remove();
 }
 
-class MyApp extends StatelessWidget with GetItMixin {
-  MyApp({Key? key}) : super(key: key);
+class MyApp extends ConsumerWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final locale = watchX((SettingsLogic s) => s.currentLocale);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appRouter = ref.watch(goRouterProvider);
+    // final locale = watchX((SettingsLogic s) => s.currentLocale);
+    const locale = "en";
 
     return ProviderScope(
       child: ScreenUtilInit(
@@ -34,7 +42,7 @@ class MyApp extends StatelessWidget with GetItMixin {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp.router(
-            locale: locale == null ? null : Locale(locale),
+            locale: locale == null ? null : const Locale(locale),
             debugShowCheckedModeBanner: false,
             routerDelegate: appRouter.routerDelegate,
             routeInformationProvider: appRouter.routeInformationProvider,
@@ -59,15 +67,12 @@ class MyApp extends StatelessWidget with GetItMixin {
 }
 
 void registerSingletons() {
-  // Top level app controller
-  GetIt.I.registerLazySingleton<AppLogic>(() => AppLogic());
   // Settings
   GetIt.I.registerLazySingleton<SettingsLogic>(() => SettingsLogic());
   // Localizations
   GetIt.I.registerLazySingleton<LocaleLogic>(() => LocaleLogic());
 }
 
-AppLogic get appLogic => GetIt.I.get<AppLogic>();
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 LocaleLogic get localeLogic => GetIt.I.get<LocaleLogic>();
 AppLocalizations get $strings => localeLogic.strings;

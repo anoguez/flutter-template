@@ -1,0 +1,29 @@
+default_platform(:android)
+
+platform :android do
+
+  lane :beta do
+
+    # INCREMENT BUILD NUMBER
+    # increment_build_number
+
+    gradle(
+        task: 'assemble',
+        build_type: ENV['GRADLE_BUILD_TYPE'],
+        # print_command: false,
+        properties: {
+            "android.injected.signing.store.file" => ENV['STORE_FILE'],
+            "android.injected.signing.store.password" => ENV['STORE_PASSWORD'],
+            "android.injected.signing.key.alias" => ENV['KEY_ALIAS'],
+            "android.injected.signing.key.password" => ENV['KEY_PASSWORD'],
+        }
+    )
+
+    # firebase_app_distribution(
+    #     app: ENV['APP_NAME'] # "1:123456789:android:abcd1234",
+    #     groups: ENV['GROUPS'] # "qa-team, trusted-testers"
+    # )
+
+  end
+
+end
