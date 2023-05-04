@@ -1,0 +1,13 @@
+storage_mode("s3")
+
+s3_bucket(ENV['S3_BUCKET'])
+s3_region(ENV['S3_REGION'])
+s3_access_key(ENV['S3_ACCESS_KEY'])
+s3_secret_access_key(ENV['S3_SECRET_ACCESS_KEY'])
+
+type("development") # The default type, can be: appstore, adhoc, enterprise or development
+
+app_identifier([ENV['APP_IDENTIFIER']])
+username(ENV['APP_ID']) # Your Apple Developer Portal username
+fail_on_name_taken(true)
+force_for_new_certificates(true)

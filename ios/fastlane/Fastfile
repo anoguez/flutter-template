@@ -1,0 +1,93 @@
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+
+  lane :certs do
+    
+    app_store_connect_api_key()
+
+    match(
+        app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
+        type: 'appstore', 
+        readonly: is_ci
+    )
+
+    # Get a new certificate for push notifications
+    get_push_certificate( 
+        output_path: ENV["OUTPUT_FILES_PATH"]
+    )
+
+    # Create or get certificate, and install it
+    get_certificates( 
+        output_path: ENV["OUTPUT_FILES_PATH"]
+    )
+
+    # Create or get provisioning profile
+    get_provisioning_profile( 
+      output_path: ENV["OUTPUT_FILES_PATH"],
+      filename: "app.mobileprovision"
+    )
+
+    # Set the project provisioning profile (related in Xcode to the General > Signing Release section)
+    update_project_provisioning( 
+      xcodeproj: "Runner.xcodeproj",
+      target_filter: ENV['APP_NAME'], # Name of your project
+      profile: "app.mobileprovision",
+      build_configuration: "Release"
+    )
+
+    # Set the right team on your project
+    update_project_team( 
+      teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+    )
+
+    gym
+  end
+
+  private_lane :build do
+    # RUN LANE TO GET CERTS
+    certs
+
+    # INCREMENT BUILD NUMBER
+    increment_build_number(xcodeproj: "Runner.xcodeproj")
+
+    # Commit the version bump
+    # commit_version_bump(xcodeproj: "Runner.xcodeproj")
+
+    # Add a git tag for this build. This will automatically
+    # use an appropriate git tag name
+    # add_git_tag
+
+    # Push the new commit and tag back to your git remote
+    # push_to_git_remote
+
+    # BUILD APP
+    build_app(
+        workspace: "Runner.xcworkspace", 
+        scheme: "Runner",
+        clean: true,
+        export_method: "app-store",
+        build_path: ENV["OUTPUT_FILES_PATH"],
+        output_directory: ENV["OUTPUT_FILES_PATH"]
+    )
+
+  end
+
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+
+    # RUN BUILD LANE
+    build
+
+    # GET GIT CHANGELOG
+    # changelog_from_git_commits
+    
+    # UPLOAD TO TEST FLIGTH
+    pilot()
+    
+  end
+  
+end

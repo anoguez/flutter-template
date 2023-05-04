@@ -3,22 +3,25 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/router.dart';
+import 'package:flutter_template/router/go_router.dart';
 import 'package:flutter_template/ui/common/utils/page_routes.dart';
 
-class AppLogic {
+final appLogicProvider = Provider((ref) => _AppLogic(ref: ref));
+
+class _AppLogic {
+  final ProviderRef ref;
+
   /// Indicates to the rest of the app that bootstrap has not completed.
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
+
+  _AppLogic({required this.ref});
 
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
     // Default error handler
     FlutterError.onError = _handleFlutterError;
-
-    // Load any bitmaps the views might need
-    // await AppBitmaps.init();
 
     // Default to only allowing portrait mode
     setDeviceOrientation(Axis.vertical);
@@ -38,13 +41,14 @@ class AppLogic {
     isBootstrapComplete = true;
 
     // Load initial view (replace empty initial view which is covered by a native splash screen)
-    bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
 
-    if (showIntro) {
-      appRouter.go(ScreenPaths.home); // TODO
-    } else {
-      appRouter.go(ScreenPaths.home);
-    }
+    // bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
+
+    // if (showIntro) {
+    //   ref.read(goRouterProvider).go(ScreenPaths.onboarding);
+    // } else {
+    ref.read(goRouterProvider).go(ScreenPaths.root);
+    // }
   }
 
   void setDeviceOrientation(Axis? axis) {
