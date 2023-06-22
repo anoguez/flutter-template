@@ -5,7 +5,7 @@ class SliderPoints extends StatelessWidget {
   final int selectedIndex;
   final int? maxAllowedIndex;
   final double? size;
-  final Function(int index) onTap;
+  final void Function(int index) onTap;
   final Color selectedColor;
   final Color unselectedColor;
 

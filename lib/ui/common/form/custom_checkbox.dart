@@ -32,7 +32,7 @@ class CustomCheckbox extends ReactiveFormField<bool, bool> {
                   Text(
                     label,
                     style: $styles.text.body.merge(labelStyle),
-                  )
+                  ),
               ],
             );
           },

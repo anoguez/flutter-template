@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 class PageRoutes {
   static const Duration kDefaultDuration = Duration(milliseconds: 300);
 
-  static Route<T> dialog<T>(Widget child,
-      [Duration duration = kDefaultDuration, bool opaque = false]) {
+  static Route<T> dialog<T>(
+    Widget child, [
+    Duration duration = kDefaultDuration,
+    bool opaque = false,
+  ]) {
     return PageRouteBuilder<T>(
       transitionDuration: duration,
       reverseTransitionDuration: duration,

@@ -103,7 +103,7 @@ class CustomDropdownField<T, V> extends ReactiveFormField<T, V> {
                         preferBelow: true,
                         verticalOffset: 0,
                         child: tooltipIcon ?? const Icon(Icons.info_outline),
-                      )
+                      ),
                   ],
                 ),
                 labelStyle: TextStyle(

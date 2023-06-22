@@ -32,7 +32,7 @@ class PopupMenu extends ConsumerWidget {
             spacing: $styles.horizontalInsets.sm,
             children: [
               Icon(Icons.settings, color: $styles.colors.accent2),
-              const Text('Settings')
+              const Text('Settings'),
             ],
           ),
         ),

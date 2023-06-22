@@ -19,7 +19,7 @@ class ScreenPaths {
   static String screen1 = '/screen1';
 }
 
-final goRouterProvider = Provider<GoRouter>((ref) {
+final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigator,
     initialLocation: '/',
@@ -57,7 +57,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           ),
         ],
         observers: const [],
-      )
+      ),
     ],
   );
 });
@@ -72,7 +72,7 @@ class AppRoute extends GoRoute {
     GlobalKey<NavigatorState>? parentNavigatorKey,
   }) : super(
           path: path,
-          name: path, // TODO
+          name: path,
           routes: routes,
           parentNavigatorKey: parentNavigatorKey,
           pageBuilder: (context, state) {
@@ -83,6 +83,7 @@ class AppRoute extends GoRoute {
               return NoTransitionPage(
                 key: state.pageKey,
                 child: pageContent,
+                name: state.name,
               );
             }
 
@@ -90,29 +91,32 @@ class AppRoute extends GoRoute {
               return CustomTransitionPage(
                 key: state.pageKey,
                 child: pageContent,
+                name: state.name,
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return FadeTransition(opacity: animation, child: child);
                 },
               );
             }
-            return CupertinoPage(child: pageContent);
+            return CupertinoPage(
+              child: pageContent,
+              name: state.name,
+            );
           },
         );
 }
 
 FutureOr<String?> _handleRedirect(
-    BuildContext context, GoRouterState state, ProviderRef ref) async {
+  BuildContext _,
+  GoRouterState state,
+  ProviderRef ref,
+) async {
   final appLogic = ref.read(appLogicProvider);
   // Prevent anyone from navigating away from `/` if app is starting up.
   if (!appLogic.isBootstrapComplete && state.location != ScreenPaths.splash) {
     return ScreenPaths.splash;
   }
   debugPrint('Navigate to: ${state.location}');
-
-  // FirebaseAnalytics.instance.logScreenView(
-  //   screenName: state.name
-  // ).then((value) => debugPrint("analytics logged"));
 
   // final authRepository = ref.read(authRepositoryProvider);
   // final authSession = await authRepository.getAuthData();

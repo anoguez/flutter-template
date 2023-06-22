@@ -73,7 +73,9 @@ class _AppLogic {
   }
 
   Future<T?> showFullscreenDialogRoute<T>(
-      BuildContext context, Widget child) async {
+    BuildContext context,
+    Widget child,
+  ) async {
     return await Navigator.of(context).push<T>(
       PageRoutes.dialog<T>(child, $styles.times.pageTransition),
     );
