@@ -49,14 +49,14 @@ class _Text {
   };
 
   TextStyle _getFontForLocale(Map<String, TextStyle> fonts) {
-    if (localeLogic.isLoaded) {
-      return fonts.entries
-          .firstWhere((x) => x.key == $strings.localeName,
-              orElse: () => fonts.entries.first)
-          .value;
-    } else {
-      return fonts.entries.first.value;
-    }
+    return localeLogic.isLoaded
+        ? fonts.entries
+            .firstWhere(
+              (x) => x.key == $strings.localeName,
+              orElse: () => fonts.entries.first,
+            )
+            .value
+        : fonts.entries.first.value;
   }
 
   // TextStyle get titleFont => _getFontForLocale(_titleFonts);
@@ -83,17 +83,20 @@ class _Text {
 
   // late final TextStyle h1 = copy(titleFont, sizePx: 64, heightPx: 62);
 
-  TextStyle copy(TextStyle style,
-      {required double sizePx,
-      double? heightPx,
-      double? spacingPc,
-      FontWeight? weight}) {
+  TextStyle copy(
+    TextStyle style, {
+    required double sizePx,
+    double? heightPx,
+    double? spacingPc,
+    FontWeight? weight,
+  }) {
     return style.copyWith(
-        fontSize: sizePx,
-        height: heightPx != null ? (heightPx / sizePx) : style.height,
-        letterSpacing:
-            spacingPc != null ? sizePx * spacingPc * 0.01 : style.letterSpacing,
-        fontWeight: weight);
+      fontSize: sizePx,
+      height: heightPx != null ? (heightPx / sizePx) : style.height,
+      letterSpacing:
+          spacingPc != null ? sizePx * spacingPc * 0.01 : style.letterSpacing,
+      fontWeight: weight,
+    );
   }
 }
 
@@ -144,21 +147,24 @@ class _VerticalInsets {
 class _Shadows {
   final textSoft = [
     Shadow(
-        color: Colors.black.withOpacity(.25),
-        offset: const Offset(0, 2),
-        blurRadius: 4),
+      color: Colors.black.withOpacity(.25),
+      offset: const Offset(0, 2),
+      blurRadius: 4,
+    ),
   ];
   final text = [
     Shadow(
-        color: Colors.black.withOpacity(.6),
-        offset: const Offset(0, 2),
-        blurRadius: 2),
+      color: Colors.black.withOpacity(.6),
+      offset: const Offset(0, 2),
+      blurRadius: 2,
+    ),
   ];
   final textStrong = [
     Shadow(
-        color: Colors.black.withOpacity(.6),
-        offset: const Offset(0, 4),
-        blurRadius: 6),
+      color: Colors.black.withOpacity(.6),
+      offset: const Offset(0, 4),
+      blurRadius: 6,
+    ),
   ];
 }
 

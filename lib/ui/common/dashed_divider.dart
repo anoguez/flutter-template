@@ -5,8 +5,13 @@ class DashedDivider extends StatelessWidget {
   final double height;
   final double width;
   final double space;
-  const DashedDivider(
-      {super.key, this.color, this.height = 1, this.width = 3, this.space = 0});
+  const DashedDivider({
+    super.key,
+    this.color,
+    this.height = 1,
+    this.width = 3,
+    this.space = 0,
+  });
 
   @override
   Widget build(BuildContext context) {

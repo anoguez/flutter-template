@@ -2,9 +2,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/logic/locale_logic.dart';
 import 'package:flutter_template/router/go_router.dart';
 import 'package:flutter_template/ui/common/app_scaffold.dart';
+
+import 'logic/locale_logic.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -75,4 +76,5 @@ void registerSingletons() {
 
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 LocaleLogic get localeLogic => GetIt.I.get<LocaleLogic>();
+
 AppLocalizations get $strings => localeLogic.strings;

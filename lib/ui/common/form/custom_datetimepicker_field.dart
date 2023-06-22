@@ -11,7 +11,9 @@ enum ReactiveDatePickerFieldType {
 }
 
 typedef GetInitialDate = DateTime Function(
-    DateTime? fieldValue, DateTime lastDate);
+  DateTime? fieldValue,
+  DateTime lastDate,
+);
 
 typedef GetInitialTime = TimeOfDay Function(DateTime? fieldValue);
 
@@ -178,7 +180,8 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                                     ),
                                     textTheme: TextTheme(
                                       titleMedium: TextStyle(
-                                          color: $styles.colors.accent2),
+                                        color: $styles.colors.accent2,
+                                      ),
                                     ),
                                     dialogBackgroundColor: $styles.colors.white,
                                   ),
@@ -250,7 +253,7 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                               verticalOffset: 0,
                               child:
                                   tooltipIcon ?? const Icon(Icons.info_outline),
-                            )
+                            ),
                         ],
                       ),
                       labelStyle: TextStyle(
@@ -294,7 +297,9 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
         );
 
   static DateTimeValueAccessor _effectiveValueAccessor(
-      ReactiveDatePickerFieldType fieldType, DateFormat? dateFormat) {
+    ReactiveDatePickerFieldType fieldType,
+    DateFormat? dateFormat,
+  ) {
     switch (fieldType) {
       case ReactiveDatePickerFieldType.date:
         return DateTimeValueAccessor(

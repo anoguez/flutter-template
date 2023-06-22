@@ -74,7 +74,7 @@ class CustomTextField<T> extends ReactiveFormField<T, T> {
                         preferBelow: true,
                         verticalOffset: 0,
                         child: tooltipIcon ?? const Icon(Icons.info_outline),
-                      )
+                      ),
                   ],
                 ),
                 floatingLabelBehavior: FloatingLabelBehavior.always,

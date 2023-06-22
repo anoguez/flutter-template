@@ -56,5 +56,46 @@
                 "panel": "new"
             }
         },
+        {
+            "type": "flutter",
+            "command": "dart",
+            "args": [
+                "test",
+                "--coverage=./coverage"
+            ],
+            "group": "test",
+            "label": "flutter test: Run tests with coverage",
+            "detail": ""
+        },
+        {
+            "type": "flutter",
+            "command": "dart",
+            "args": [
+                "pub",
+                "global",
+                "run",
+                "coverage:format_coverage",
+                "--packages=.dart_tool/package_config.json",
+                "--report-on=lib",
+                "--lcov",
+                "-o",
+                "./coverage/lcov.info",
+                "-i",
+                "./coverage"
+            ],
+            "group": "test",
+            "label": "flutter test: Format collected coverage to LCOV (only for directory 'lib')",
+            "detail": ""
+        },
+        {
+            "type": "shell",
+            "command": "genhtml -o ./coverage/report ./coverage/lcov.info",
+            "group": "test",
+            "label": "flutter test: Generate LCOV report",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+        },
+       
     ]
 }

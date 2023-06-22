@@ -1,4 +1,3 @@
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_template/common_libs.dart';
 import 'package:flutter_template/ui/common/slider_points.dart';
 import 'package:flutter_template/ui/common/swipe_detector.dart';

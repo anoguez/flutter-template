@@ -1,5 +1,4 @@
 import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class SwipeDetector extends HookConsumerWidget {
   final Widget child;
@@ -18,7 +17,7 @@ class SwipeDetector extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDragging = useState(false);
-    final debounceDragging = useCallback(() async {
+    final debounceDragging = useCallback(() {
       isDragging.value = true;
       Future.delayed(debounceTime, () => isDragging.value = false);
     }, []);

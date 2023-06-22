@@ -29,3 +29,18 @@ Localization files should be added in the **/lib/l10n** folder
 
 ### Routes
 Routes can be configured in the **router.dart** file
+
+
+### Code Metrics [See More](https://pub.dev/packages/dart_code_metrics)
+
+Reports code metrics, rules and anti-patterns violations.
+```dart run dart_code_metrics:metrics analyze lib```
+
+Checks unused *.dart files.
+```	dart run dart_code_metrics:metrics check-unused-files lib```
+
+Check unused localization in *.dart files.
+```dart run dart_code_metrics:metrics check-unused-l10n lib```
+
+Checks unused code in *.dart files.
+```dart run dart_code_metrics:metrics check-unused-code lib```
