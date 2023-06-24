@@ -17,8 +17,12 @@ pipeline {
         stage('Build') { 
             steps {
                 echo 'Building Project...'
-                sh 'cd ios/fastlane'
-                sh 'fastlane beta'
+
+                dir("/ios/fastlane") {
+                    sh "pwd"
+                    sh 'fastlane beta'
+                }
+                
             }
         }
 
