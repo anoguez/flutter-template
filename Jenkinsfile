@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'macos-agent' }
+    agent { label 'macos' }
 
     environment {
         APP_NAME = "Runner"
