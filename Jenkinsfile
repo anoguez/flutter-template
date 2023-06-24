@@ -17,7 +17,6 @@ pipeline {
         
         APP_STORE_CONNECT_API_KEY_KEY=${APP_STORE_CONNECT_API_KEY_KEY}
 
-        # S3
         S3_BUCKET=${S3_BUCKET}
         S3_REGION=${S3_REGION}
         S3_ACCESS_KEY=${S3_ACCESS_KEY}
