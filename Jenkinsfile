@@ -18,7 +18,8 @@ pipeline {
             steps {
                 echo 'Building Project...'
 
-                dir("/ios/fastlane") {
+                sh "pwd"
+                dir("./ios/fastlane") {
                     sh "pwd"
                     sh 'fastlane beta'
                 }
