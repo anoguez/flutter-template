@@ -16,7 +16,7 @@ platform :ios do
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
-        readonly: false
+        readonly: is_ci
     )
 
     # Get a new certificate for push notifications
