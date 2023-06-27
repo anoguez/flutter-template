@@ -9,6 +9,10 @@ platform :ios do
     
     app_store_connect_api_key()
 
+    setup_ci if is_ci
+
+    cocoapods(clean_install: is_ci)
+
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
