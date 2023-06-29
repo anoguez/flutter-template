@@ -9,15 +9,15 @@ platform :ios do
 
   lane :certs do
 
+    app_store_connect_api_key()
     # setup_ci if is_ci
     
     setup_jenkins(
         unlock_keychain: true,
-        keychain_password: TEMP_KEYCHAIN_PASSWORD,
+        # keychain_password: TEMP_KEYCHAIN_PASSWORD,
         output_directory: ENV["OUTPUT_FILES_PATH"]
     )
     
-    app_store_connect_api_key()
 
     cocoapods(clean_install: is_ci)
 
