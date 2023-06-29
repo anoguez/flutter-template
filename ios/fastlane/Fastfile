@@ -3,39 +3,21 @@
 
 default_platform(:ios)
 
-TEMP_KEYCHAIN_USER = ENV["TEMP_KEYCHAIN_USER"]
 TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
-
-def delete_temp_keychain()
-  delete_keychain(
-    name: TEMP_KEYCHAIN_USER
-  ) if File.exist? File.expand_path("~/Library/Keychains/#{TEMP_KEYCHAIN_USER}-db")
-end
-
-def create_temp_keychain()
-  create_keychain(
-    name: TEMP_KEYCHAIN_USER,
-    password: TEMP_KEYCHAIN_PASSWORD,
-    unlock: false,
-    timeout: 3600,
-    require_create: true,
-  )
-end
-
-def ensure_temp_keychain()
-  delete_temp_keychain()
-  create_temp_keychain()
-end
 
 platform :ios do
 
   lane :certs do
 
-    ensure_temp_keychain()
+    # setup_ci if is_ci
+    
+    setup_jenkins(
+        unlock_keychain: true,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD,
+        output_directory: ENV["OUTPUT_FILES_PATH"]
+    )
     
     app_store_connect_api_key()
-
-    setup_ci if is_ci
 
     cocoapods(clean_install: is_ci)
 
@@ -123,8 +105,6 @@ platform :ios do
       notify_external_testers: false,
     )
     
-    delete_temp_keychain()
-
   end
   
 end
