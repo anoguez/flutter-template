@@ -16,7 +16,7 @@ platform :ios do
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
-        readonly: false
+        readonly: is_ci
     )
 
     # Get a new certificate for push notifications
@@ -90,7 +90,12 @@ platform :ios do
     # changelog_from_git_commits
     
     # UPLOAD TO TEST FLIGTH
-    pilot()
+    pilot(
+      skip_waiting_for_build_processing: true,
+      skip_submission: true,
+      distribute_external: false,
+      notify_external_testers: false,
+    )
     
   end
   
