@@ -6,9 +6,9 @@ default_platform(:ios)
 TEMP_KEYCHAIN_USER = ENV["TEMP_KEYCHAIN_USER"]
 TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
 
-def delete_temp_keychain(name)
+def delete_temp_keychain()
   delete_keychain(
-    name: name
+    name: TEMP_KEYCHAIN_USER
   ) if File.exist? File.expand_path("~/Library/Keychains/#{TEMP_KEYCHAIN_USER}-db")
 end
 
@@ -22,8 +22,8 @@ def create_temp_keychain()
 end
 
 def ensure_temp_keychain()
-  delete_temp_keychain(TEMP_KEYCHAIN_USER)
-  create_temp_keychain(TEMP_KEYCHAIN_USER, TEMP_KEYCHAIN_PASSWORD)
+  delete_temp_keychain()
+  create_temp_keychain()
 end
 
 platform :ios do
