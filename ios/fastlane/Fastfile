@@ -17,7 +17,8 @@ def create_temp_keychain()
     name: TEMP_KEYCHAIN_USER,
     password: TEMP_KEYCHAIN_PASSWORD,
     unlock: false,
-    timeout: false
+    timeout: 3600,
+    require_create: true,
   )
 end
 
