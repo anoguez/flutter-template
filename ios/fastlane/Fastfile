@@ -3,9 +3,34 @@
 
 default_platform(:ios)
 
+TEMP_KEYCHAIN_USER = ENV["TEMP_KEYCHAIN_USER"]
+TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+
+def delete_temp_keychain(name)
+  delete_keychain(
+    name: name
+  ) if File.exist? File.expand_path("~/Library/Keychains/#{TEMP_KEYCHAIN_USER}-db")
+end
+
+def create_temp_keychain()
+  create_keychain(
+    name: TEMP_KEYCHAIN_USER,
+    password: TEMP_KEYCHAIN_PASSWORD,
+    unlock: false,
+    timeout: false
+  )
+end
+
+def ensure_temp_keychain()
+  delete_temp_keychain(TEMP_KEYCHAIN_USER)
+  create_temp_keychain(TEMP_KEYCHAIN_USER, TEMP_KEYCHAIN_PASSWORD)
+end
+
 platform :ios do
 
   lane :certs do
+
+    ensure_temp_keychain()
     
     app_store_connect_api_key()
 
@@ -97,6 +122,8 @@ platform :ios do
       notify_external_testers: false,
     )
     
+    delete_temp_keychain()
+
   end
   
 end
