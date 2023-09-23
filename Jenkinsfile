@@ -28,8 +28,7 @@ pipeline {
 
         stage('Starting') {
             steps {
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "Testing... ${APP_ID}"
+                echo "Running Build ${env.BUILD_ID} on ${env.JENKINS_URL}"
             }
         }
 
@@ -106,6 +105,8 @@ pipeline {
         stage('Build') { 
             steps {
                 echo 'Building Project...'
+
+                sh "flutter pub get"
 
                 sh "pwd"
                 dir("./ios/fastlane") {
