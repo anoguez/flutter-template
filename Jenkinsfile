@@ -10,6 +10,8 @@ pipeline {
 
         APP_NAME = "Runner"
         APP_IDENTIFIER = "com.ngz.flutter_template"
+
+        APP_STORE_CONNECT_API_KEY_KEY = credentials('ITC_AUTH_KEY')
     }
 
     options {
@@ -17,6 +19,13 @@ pipeline {
     }
 
     stages {
+
+        stage('Starting') {
+            steps {
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                echo "Test ${APP_STORE_CONNECT_API_KEY_KEY}"
+            }
+        }
 
         stage('Git Checkout') {
             steps {
