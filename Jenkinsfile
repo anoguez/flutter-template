@@ -102,11 +102,15 @@ pipeline {
         //         stage('Code Coverage') {  }
         // }
 
+        stage('Update dependencies') {
+            steps {
+                sh "flutter pub get"
+            }
+        }
+
         stage('Build') { 
             steps {
                 echo 'Building Project...'
-
-                sh "flutter pub get"
 
                 sh "pwd"
                 dir("./ios/fastlane") {
