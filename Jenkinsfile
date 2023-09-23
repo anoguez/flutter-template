@@ -1,14 +1,19 @@
 pipeline {
     agent { label 'macos' }
 
-    environment {
+    parameters { }
 
+    environment {
         LC_ALL = 'en_US.UTF-8'
         LANG = 'en_US.UTF-8'
         LANGUAGE = 'en_US.UTF-8'
 
         APP_NAME = "Runner"
         APP_IDENTIFIER = "com.ngz.flutter_template"
+    }
+
+    options {
+        skipDefaultCheckout(true)
     }
 
     stages {
