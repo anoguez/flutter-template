@@ -22,7 +22,7 @@ pipeline {
 
         FASTLANE_PASSWORD = credentials('FASTLANE_PASSWORD')
         // FASTLANE_SESSION = credentials('FASTLANE_SESSION')
-        OUTPUT_FILES_PATH = env.OUTPUT_FILES_PATH
+        OUTPUT_FILES_PATH = "${env.OUTPUT_FILES_PATH}"
     }
 
     options {
