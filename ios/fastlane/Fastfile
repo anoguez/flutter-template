@@ -61,6 +61,10 @@ platform :ios do
   end
 
   private_lane :build do
+
+    # Ensure that the git status is clean and no megre head or un-commited code exists
+    ensure_git_status_clean
+
     # RUN LANE TO GET CERTS
     certs
 
