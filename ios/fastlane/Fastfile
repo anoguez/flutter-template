@@ -14,7 +14,7 @@ platform :ios do
     
     setup_jenkins(
         unlock_keychain: true,
-        # keychain_password: TEMP_KEYCHAIN_PASSWORD,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD,
         output_directory: ENV["OUTPUT_FILES_PATH"]
     )
     
@@ -25,7 +25,10 @@ platform :ios do
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
         readonly: is_ci,
-        output_path: ENV["OUTPUT_FILES_PATH"]
+        output_path: ENV["OUTPUT_FILES_PATH"],
+        force_for_new_devices: true,
+        verbose: false
+        # keychain_name
     )
 
     # Get a new certificate for push notifications
