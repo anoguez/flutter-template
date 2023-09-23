@@ -11,7 +11,7 @@ pipeline {
         APP_NAME = "Runner"
         APP_IDENTIFIER = "com.ngz.flutter_template"
 
-        APP_STORE_CONNECT_API_KEY_KEY = "${credentials('ITC_AUTH_KEY')}"
+        APP_STORE_CONNECT_API_KEY_KEY_FILEPATH = credentials('ITC_AUTH_KEY')
 
         S3_BUCKET = "com.ngz.flutter-project"
         S3_ACCESS_KEY = credentials('S3_ACCESS_KEY')
