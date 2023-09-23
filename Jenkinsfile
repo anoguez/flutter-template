@@ -17,7 +17,11 @@ pipeline {
         S3_ACCESS_KEY = credentials('S3_ACCESS_KEY')
         S3_SECRET_ACCESS_KEY = credentials('S3_SECRET_ACCESS_KEY')
 
-        MATCH_PASSWORD = credentials('FASTLANE_PASSWORD')
+        MATCH_PASSWORD = credentials('match_pwd')
+
+        // FASTLANE_USER = env.APP_ID
+        // FASTLANE_PASSWORD = credentials('FASTLANE_PASSWORD')
+        FASTLANE_SESSION = credentials('FASTLANE_SESSION')
     }
 
     options {
