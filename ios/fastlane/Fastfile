@@ -10,7 +10,7 @@ platform :ios do
   lane :certs do
 
     app_store_connect_api_key()
-    # setup_ci if is_ci
+    setup_ci if is_ci
     
     setup_jenkins(
         unlock_keychain: true,
@@ -24,8 +24,7 @@ platform :ios do
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
-        # readonly: is_ci,
-        readonly: false,
+        readonly: is_ci,
         output_path: ENV["OUTPUT_FILES_PATH"]
     )
 
@@ -69,7 +68,7 @@ platform :ios do
     # ensure_git_status_clean
 
     # RUN LANE TO GET CERTS
-    certs
+    # certs
 
     # INCREMENT BUILD NUMBER
     increment_build_number(xcodeproj: "Runner.xcodeproj")
