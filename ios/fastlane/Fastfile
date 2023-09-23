@@ -29,7 +29,7 @@ platform :ios do
         readonly: is_ci,
         output_path: ENV["OUTPUT_FILES_PATH"],
         force_for_new_devices: true,
-        verbose: false
+        verbose: false,
         keychain_name: TEMP_KEYCHAIN_NAME
     )
 
