@@ -11,7 +11,20 @@ pipeline {
         APP_NAME = "Runner"
         APP_IDENTIFIER = "com.ngz.flutter_template"
 
+        // APP_ID = ""
+        // ITC_TEAM_ID = ""
+        // DEV_TEAM_ID = ""
+
         APP_STORE_CONNECT_API_KEY_KEY = credentials('ITC_AUTH_KEY')
+        // APP_STORE_CONNECT_API_KEY_ISSUER_ID = ""
+
+        // S3_BUCKET = ""
+        S3_REGION = "ap-southeast-2"
+        // S3_BUCKET = ""
+        S3_ACCESS_KEY = credentials('S3_ACCESS_KEY')
+        S3_SECRET_ACCESS_KEY = credentials('S3_SECRET_ACCESS_KEY')
+
+        MATCH_PASSWORD = credentials('FASTLANE_PASSWORD')
     }
 
     options {
@@ -23,7 +36,7 @@ pipeline {
         stage('Starting') {
             steps {
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "Test ${APP_STORE_CONNECT_API_KEY_KEY}"
+                echo "Testing... ${APP_ID}"
             }
         }
 
