@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'macos' }
 
-    parameters { }
+    // parameters { }
 
     environment {
         LC_ALL = 'en_US.UTF-8'
