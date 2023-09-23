@@ -1,5 +1,5 @@
 # Uncomment the line if you want fastlane to automatically update itself
-update_fastlane
+# update_fastlane
 
 default_platform(:ios)
 
@@ -24,7 +24,7 @@ platform :ios do
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
-        readonly: false,
+        readonly: is_ci,
         output_path: ENV["OUTPUT_FILES_PATH"]
     )
 
