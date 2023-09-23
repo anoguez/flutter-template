@@ -21,7 +21,7 @@ pipeline {
         // MATCH_PASSWORD = credentials('match_pwd')
 
         // FASTLANE_USER = env.APP_ID
-        // FASTLANE_PASSWORD = credentials('FASTLANE_PASSWORD')
+        FASTLANE_PASSWORD = credentials('FASTLANE_PASSWORD')
         FASTLANE_SESSION = credentials('FASTLANE_SESSION')
     }
 
