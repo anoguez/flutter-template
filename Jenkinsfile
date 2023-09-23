@@ -20,9 +20,9 @@ pipeline {
         MATCH_PASSWORD = credentials('FASTLANE_PASSWORD')
         // MATCH_PASSWORD = credentials('match_pwd')
 
-        // FASTLANE_USER = env.APP_ID
         FASTLANE_PASSWORD = credentials('FASTLANE_PASSWORD')
-        FASTLANE_SESSION = credentials('FASTLANE_SESSION')
+        // FASTLANE_SESSION = credentials('FASTLANE_SESSION')
+        OUTPUT_FILES_PATH = credentials('OUTPUT_FILES_PATH')
     }
 
     options {
