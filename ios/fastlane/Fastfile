@@ -4,6 +4,7 @@
 default_platform(:ios)
 
 TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
 
 platform :ios do
 
@@ -14,6 +15,7 @@ platform :ios do
     
     setup_jenkins(
         unlock_keychain: true,
+        keychain_name: TEMP_KEYCHAIN_NAME,
         keychain_password: TEMP_KEYCHAIN_PASSWORD,
         output_directory: ENV["OUTPUT_FILES_PATH"]
     )
@@ -28,7 +30,7 @@ platform :ios do
         output_path: ENV["OUTPUT_FILES_PATH"],
         force_for_new_devices: true,
         verbose: false
-        # keychain_name
+        keychain_name: TEMP_KEYCHAIN_NAME
     )
 
     # Get a new certificate for push notifications
