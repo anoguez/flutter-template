@@ -96,11 +96,11 @@ pipeline {
             }
         }
 
-        post {
-            always {
-                echo "Build completed with status: ${currentBuild.result}"
-            }
-        }
+    }
 
+    post {
+        always {
+            echo "Build completed with status: ${currentBuild.result}"
+        }
     }
 }
