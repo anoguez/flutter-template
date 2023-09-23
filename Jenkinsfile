@@ -108,13 +108,18 @@ pipeline {
             }
         }
 
-        stage('Build') { 
+        stage('Fastlane') {
             steps {
                 echo 'Building Project...'
 
                 sh "pwd"
                 dir("./ios/fastlane") {
                     sh "pwd"
+
+                    echo 'Getting certs...'
+                    sh 'fastlane certs'
+
+                    echo 'Building Beta Release'
                     sh 'fastlane beta'
                 }
                 
