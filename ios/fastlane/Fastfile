@@ -15,7 +15,7 @@ platform :ios do
     
     setup_jenkins(
         unlock_keychain: true,
-        keychain_name: TEMP_KEYCHAIN_NAME,
+        # keychain_name: TEMP_KEYCHAIN_NAME,
         keychain_password: TEMP_KEYCHAIN_PASSWORD,
         output_directory: ENV["OUTPUT_FILES_PATH"]
     )
