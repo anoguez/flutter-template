@@ -79,6 +79,17 @@ platform :ios do
     # INCREMENT BUILD NUMBER
     increment_build_number(xcodeproj: "Runner.xcodeproj")
 
+    #Release notes - If empty will show last git commits in the notes
+    if release_notes.empty?
+      # Fetch changelog from Git repo
+      release_notes = changelog_from_git_commits(
+                          commits_count: "10",
+                          pretty: "- (%ae) %s",
+                          date_format: "short",
+                          match_lightweight_tag: false, 
+                          merge_commit_filtering: "exclude_merges")
+    end    
+
     # Commit the version bump
     # commit_version_bump(xcodeproj: "Runner.xcodeproj")
 
@@ -116,6 +127,7 @@ platform :ios do
       skip_submission: true,
       distribute_external: false,
       notify_external_testers: false,
+      changelog: release_notes
     )
     
   end
