@@ -13,12 +13,11 @@ pipeline {
 
         APP_STORE_CONNECT_API_KEY_KEY_FILEPATH = credentials('ITC_AUTH_KEY')
 
-        S3_BUCKET = "com.ngz.flutter-project"
+        S3_BUCKET = "com.ngz.flutter.certs"
         S3_ACCESS_KEY = credentials('S3_ACCESS_KEY')
         S3_SECRET_ACCESS_KEY = credentials('S3_SECRET_ACCESS_KEY')
 
-        MATCH_PASSWORD = credentials('FASTLANE_PASSWORD')
-        // MATCH_PASSWORD = credentials('match_pwd')
+        MATCH_PASSWORD = credentials('match_pwd')
 
         FASTLANE_PASSWORD = credentials('FASTLANE_PASSWORD')
         // FASTLANE_SESSION = credentials('FASTLANE_SESSION')
@@ -31,21 +30,6 @@ pipeline {
     }
 
     stages {
-
-        stage('string (secret text)') {
-            steps {
-                script {
-                withCredentials([
-                    string(
-                    credentialsId: 'FASTLANE_PASSWORD',
-                    variable: 'value')
-                ]) {
-                    print 'value=' + joke
-                    print 'value.collect { it }=' + value.collect { it }
-                }
-                }
-            }
-        }
 
         stage('Starting') {
             steps {
