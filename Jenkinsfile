@@ -35,6 +35,7 @@ pipeline {
         stage('Starting') {
             steps {
                 echo "Running Build ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                echo "Test.... ${MATCH_PASSWORD}"
             }
         }
 
@@ -108,16 +109,24 @@ pipeline {
         //         stage('Code Coverage') {  }
         // }
 
-        stage('Update dependencies') {
+        stage('Update Dependencies') {
             steps {
                 sh "flutter pub get"
             }
         }
 
-        stage('Fastlane') {
+        stage('Certs & Sign') {
             steps {
                 dir("./ios/fastlane") {
                     sh 'fastlane certs'
+                }
+                
+            }
+        }
+        
+        stage('Beta Release') {
+            steps {
+                dir("./ios/fastlane") {
                     sh 'fastlane beta'
                 }
                 
