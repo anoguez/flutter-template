@@ -30,7 +30,8 @@ platform :ios do
         output_path: ENV["OUTPUT_FILES_PATH"],
         force_for_new_devices: true,
         verbose: false,
-        keychain_name: TEMP_KEYCHAIN_NAME
+        keychain_name: TEMP_KEYCHAIN_NAME,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD
     )
 
     # Get a new certificate for push notifications
