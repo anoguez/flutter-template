@@ -32,10 +32,24 @@ pipeline {
 
     stages {
 
+        stage('string (secret text)') {
+            steps {
+                script {
+                withCredentials([
+                    string(
+                    credentialsId: 'FASTLANE_PASSWORD',
+                    variable: 'value')
+                ]) {
+                    print 'value=' + joke
+                    print 'value.collect { it }=' + value.collect { it }
+                }
+                }
+            }
+        }
+
         stage('Starting') {
             steps {
                 echo "Running Build ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "Test.... ${MATCH_PASSWORD}"
             }
         }
 
