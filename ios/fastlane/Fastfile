@@ -32,7 +32,7 @@ platform :ios do
         unlock_keychain: true,
         keychain_password: TEMP_KEYCHAIN_PASSWORD,
         output_directory: ENV["OUTPUT_FILES_PATH"],
-        add_to_search_list: true
+        add_keychain_to_search_list: true
         # set_code_signing_identity: false,
         # set_default_keychain: false
     ) if is_ci
