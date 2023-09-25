@@ -3,22 +3,23 @@
 
 default_platform(:ios)
 
-TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+TEMP_KEYCHAIN_PASSWORD = ENV["FASTLANE_PASSWORD"]
+# TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
 TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
 
 platform :ios do
 
-  private_lane :remove_temp_keychain do |options|
-    begin 
-      next if !is_ci
-      name = options[:name].nil? ? TEMP_KEYCHAIN_NAME : options[:name]
-      delete_keychain(
-        name: name
-      ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
-    rescue => ex
-      puts(ex)
-    end
-  end
+#   private_lane :remove_temp_keychain do |options|
+#     begin 
+#       next if !is_ci
+#       name = options[:name].nil? ? TEMP_KEYCHAIN_NAME : options[:name]
+#       delete_keychain(
+#         name: name
+#       ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+#     rescue => ex
+#       puts(ex)
+#     end
+#   end
 
   lane :certs do
 
@@ -55,7 +56,7 @@ platform :ios do
         force_for_new_devices: true,
         verbose: true,
         # keychain_name: TEMP_KEYCHAIN_NAME,
-        # keychain_password: TEMP_KEYCHAIN_PASSWORD
+        keychain_password: TEMP_KEYCHAIN_PASSWORD
     )
 
     # Get a new certificate for push notifications
