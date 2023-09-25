@@ -3,29 +3,60 @@
 
 default_platform(:ios)
 
-TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+TEMP_KEYCHAIN_PASSWORD = ENV["FASTLANE_PASSWORD"]
+# TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
 
 platform :ios do
+
+#   private_lane :remove_temp_keychain do |options|
+#     begin 
+#       next if !is_ci
+#       name = options[:name].nil? ? TEMP_KEYCHAIN_NAME : options[:name]
+#       delete_keychain(
+#         name: name
+#       ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+#     rescue => ex
+#       puts(ex)
+#     end
+#   end
 
   lane :certs do
 
     app_store_connect_api_key()
-    setup_ci if is_ci
+
+    # remove_temp_keychain
+
+    # setup_ci if is_ci
     
-    setup_jenkins(
-        unlock_keychain: true,
-        # keychain_password: TEMP_KEYCHAIN_PASSWORD,
-        output_directory: ENV["OUTPUT_FILES_PATH"]
-    )
+    # setup_jenkins(
+    #     unlock_keychain: true,
+    #     keychain_password: TEMP_KEYCHAIN_PASSWORD,
+    #     output_directory: ENV["OUTPUT_FILES_PATH"],
+    #     add_keychain_to_search_list: true,
+    #     set_default_keychain: true
+    # )
     
 
     cocoapods(clean_install: is_ci)
 
+    update_code_signing_settings(
+        use_automatic_signing: false,
+        path: "../ios/Runner.xcodeproj",
+        code_sign_identity: "Apple Distribution",
+        # profile_name: "match AppStore com.appbundle.id",
+        # bundle_identifier: "com.appbundle.id"
+    )
+
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
-        readonly: is_ci,
-        output_path: ENV["OUTPUT_FILES_PATH"]
+        readonly: false,
+        output_path: ENV["OUTPUT_FILES_PATH"],
+        force_for_new_devices: true,
+        verbose: true,
+        # keychain_name: TEMP_KEYCHAIN_NAME,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD
     )
 
     # Get a new certificate for push notifications
@@ -73,6 +104,17 @@ platform :ios do
     # INCREMENT BUILD NUMBER
     increment_build_number(xcodeproj: "Runner.xcodeproj")
 
+    #Release notes - If empty will show last git commits in the notes
+    if release_notes.empty?
+      # Fetch changelog from Git repo
+      release_notes = changelog_from_git_commits(
+                          commits_count: "10",
+                          pretty: "- (%ae) %s",
+                          date_format: "short",
+                          match_lightweight_tag: false, 
+                          merge_commit_filtering: "exclude_merges")
+    end    
+
     # Commit the version bump
     # commit_version_bump(xcodeproj: "Runner.xcodeproj")
 
@@ -110,6 +152,7 @@ platform :ios do
       skip_submission: true,
       distribute_external: false,
       notify_external_testers: false,
+      changelog: release_notes
     )
     
   end
