@@ -4,7 +4,7 @@
 default_platform(:ios)
 
 TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
-TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
+TEMP_KEYCHAIN_NAME = "login.keychain"
 
 platform :ios do
 
@@ -50,7 +50,7 @@ platform :ios do
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
-        readonly: is_ci,
+        readonly: false,
         output_path: ENV["OUTPUT_FILES_PATH"],
         force_for_new_devices: true,
         verbose: true,
