@@ -53,7 +53,8 @@ platform :ios do
         type: 'appstore', 
         readonly: false,
         output_path: ENV["OUTPUT_FILES_PATH"],
-        force_for_new_devices: true,
+        force_for_new_devices: false,
+        generate_apple_certs: false,
         verbose: true,
         fail_on_name_taken: false
         # keychain_name: TEMP_KEYCHAIN_NAME,
