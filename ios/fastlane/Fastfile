@@ -4,7 +4,7 @@
 default_platform(:ios)
 
 TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
-TEMP_KEYCHAIN_NAME = "login.keychain"
+TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
 
 platform :ios do
 
@@ -24,7 +24,7 @@ platform :ios do
 
     app_store_connect_api_key()
 
-    remove_temp_keychain
+    # remove_temp_keychain
 
     # setup_ci if is_ci
     
