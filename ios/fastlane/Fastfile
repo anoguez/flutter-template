@@ -55,6 +55,7 @@ platform :ios do
         output_path: ENV["OUTPUT_FILES_PATH"],
         force_for_new_devices: true,
         verbose: true,
+        fail_on_name_taken: false
         # keychain_name: TEMP_KEYCHAIN_NAME,
         # keychain_password: TEMP_KEYCHAIN_PASSWORD
     )
