@@ -11,7 +11,7 @@ platform :ios do
   private_lane :remove_temp_keychain do |options|
     begin 
       next if !is_ci
-      name = options[:name].nil? ? TEMP_KEYCHAIN : options[:name]
+      name = options[:name].nil? ? TEMP_KEYCHAIN_NAME : options[:name]
       delete_keychain(
         name: name
       ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
@@ -23,6 +23,9 @@ platform :ios do
   lane :certs do
 
     app_store_connect_api_key()
+
+    remove_temp_keychain
+
     setup_ci if is_ci
     
     setup_jenkins(
@@ -39,7 +42,7 @@ platform :ios do
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
-        readonly: false,
+        readonly: is_ci,
         output_path: ENV["OUTPUT_FILES_PATH"],
         force_for_new_devices: true,
         verbose: true,
