@@ -17,7 +17,8 @@ platform :ios do
         unlock_keychain: true,
         # keychain_name: TEMP_KEYCHAIN_NAME,
         keychain_password: TEMP_KEYCHAIN_PASSWORD,
-        output_directory: ENV["OUTPUT_FILES_PATH"]
+        output_directory: ENV["OUTPUT_FILES_PATH"],
+        set_code_signing_identity: false
     )
     
 
