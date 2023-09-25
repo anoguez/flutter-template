@@ -32,12 +32,20 @@ platform :ios do
         unlock_keychain: true,
         keychain_password: TEMP_KEYCHAIN_PASSWORD,
         output_directory: ENV["OUTPUT_FILES_PATH"],
-        set_code_signing_identity: false,
-        set_default_keychain: false
+        # set_code_signing_identity: false,
+        # set_default_keychain: false
     )
     
 
     cocoapods(clean_install: is_ci)
+
+    update_code_signing_settings(
+        use_automatic_signing: false,
+        path: "../ios/Runner.xcodeproj",
+        code_sign_identity: "iPhone Distribution",
+        # profile_name: "match AppStore com.appbundle.id",
+        # bundle_identifier: "com.appbundle.id"
+    )
 
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
