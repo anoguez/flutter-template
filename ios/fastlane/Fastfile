@@ -8,6 +8,18 @@ TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
 
 platform :ios do
 
+  private_lane :remove_temp_keychain do |options|
+    begin 
+      next if !is_ci
+      name = options[:name].nil? ? TEMP_KEYCHAIN : options[:name]
+      delete_keychain(
+        name: name
+      ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+    rescue => ex
+      puts(ex)
+    end
+  end
+
   lane :certs do
 
     app_store_connect_api_key()
@@ -15,10 +27,10 @@ platform :ios do
     
     setup_jenkins(
         unlock_keychain: true,
-        # keychain_name: TEMP_KEYCHAIN_NAME,
         keychain_password: TEMP_KEYCHAIN_PASSWORD,
         output_directory: ENV["OUTPUT_FILES_PATH"],
-        set_code_signing_identity: false
+        set_code_signing_identity: false,
+        set_default_keychain: false
     )
     
 
