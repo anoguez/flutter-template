@@ -17,7 +17,7 @@ pipeline {
         S3_ACCESS_KEY = credentials('S3_ACCESS_KEY')
         S3_SECRET_ACCESS_KEY = credentials('S3_SECRET_ACCESS_KEY')
 
-        MATCH_PASSWORD = credentials('match_pwd')
+        MATCH_PASSWORD = credentials('MATCH_PASSWORD')
         MATCH_KEYCHAIN_PASSWORD = credentials('MATCH_KEYCHAIN_PASSWORD')
 
         FASTLANE_PASSWORD = credentials('FASTLANE_PASSWORD')
