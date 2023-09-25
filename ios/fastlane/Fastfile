@@ -3,9 +3,9 @@
 
 default_platform(:ios)
 
-TEMP_KEYCHAIN_PASSWORD = ENV["FASTLANE_PASSWORD"]
+# TEMP_KEYCHAIN_PASSWORD = ENV["FASTLANE_PASSWORD"]
 # TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
-TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
+# TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
 
 platform :ios do
 
@@ -56,7 +56,7 @@ platform :ios do
         force_for_new_devices: true,
         verbose: true,
         # keychain_name: TEMP_KEYCHAIN_NAME,
-        keychain_password: TEMP_KEYCHAIN_PASSWORD
+        # keychain_password: TEMP_KEYCHAIN_PASSWORD
     )
 
     # Get a new certificate for push notifications
