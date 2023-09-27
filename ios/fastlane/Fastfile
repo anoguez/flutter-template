@@ -3,39 +3,38 @@
 
 default_platform(:ios)
 
-# TEMP_KEYCHAIN_PASSWORD = ENV["FASTLANE_PASSWORD"]
-# TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
-# TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
+TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
 
 platform :ios do
 
-#   private_lane :remove_temp_keychain do |options|
-#     begin 
-#       next if !is_ci
-#       name = options[:name].nil? ? TEMP_KEYCHAIN_NAME : options[:name]
-#       delete_keychain(
-#         name: name
-#       ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
-#     rescue => ex
-#       puts(ex)
-#     end
-#   end
+  private_lane :remove_temp_keychain do |options|
+    begin 
+      next if !is_ci
+      name = options[:name].nil? ? TEMP_KEYCHAIN_NAME : options[:name]
+      delete_keychain(
+        name: name
+      ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+    rescue => ex
+      puts(ex)
+    end
+  end
 
   lane :certs do
 
     app_store_connect_api_key()
 
-    # remove_temp_keychain
+    remove_temp_keychain
 
-    # setup_ci if is_ci
+    setup_ci if is_ci
     
-    # setup_jenkins(
-    #     unlock_keychain: true,
-    #     keychain_password: TEMP_KEYCHAIN_PASSWORD,
-    #     output_directory: ENV["OUTPUT_FILES_PATH"],
-    #     add_keychain_to_search_list: true,
-    #     set_default_keychain: true
-    # )
+    setup_jenkins(
+        unlock_keychain: true,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD,
+        output_directory: ENV["OUTPUT_FILES_PATH"],
+        add_keychain_to_search_list: true,
+        set_default_keychain: true
+    )
     
 
     cocoapods(clean_install: is_ci)
@@ -51,7 +50,7 @@ platform :ios do
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
-        readonly: false,
+        readonly: is_ci,
         output_path: ENV["OUTPUT_FILES_PATH"],
         force_for_new_devices: false,
         generate_apple_certs: false,
