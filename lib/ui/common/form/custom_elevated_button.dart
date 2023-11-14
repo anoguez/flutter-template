@@ -2,7 +2,7 @@ import 'package:flutter_template/common_libs.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
     this.primaryColor,
@@ -12,9 +12,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.fixedSize = const Size.fromWidth(80),
     this.leadingIconImage,
     this.borderRadius,
-  }) : super(
-          key: key,
-        );
+  });
 
   final String label;
   final void Function()? onPressed;

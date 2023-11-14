@@ -1,4 +1,5 @@
 /// Consolidate shared imports that are common across the app.
+library;
 
 export 'package:flutter/foundation.dart' hide shortHash, describeIdentity;
 export 'package:flutter/material.dart';
@@ -12,5 +13,5 @@ export 'package:flutter_hooks/flutter_hooks.dart';
 
 export 'package:flutter_template/main.dart';
 export 'package:flutter_template/theme/styles.dart';
-export 'package:flutter_template/logic/app_logic.dart';
+export 'package:flutter_template/logic/providers/app_logic.dart';
 export 'package:flutter_template/logic/settings_logic.dart';
