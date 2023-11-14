@@ -3,13 +3,13 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 class CustomDropdownField<T, V> extends ReactiveFormField<T, V> {
   CustomDropdownField({
-    Key? key,
-    String? formControlName,
-    FormControl<T>? formControl,
-    ControlValueAccessor<T, V>? valueAccessor,
+    super.key,
+    super.formControlName,
+    super.formControl,
+    super.valueAccessor,
     required List<DropdownMenuItem<V>> items,
-    Map<String, ValidationMessageFunction>? validationMessages,
-    ShowErrorsFunction? showErrors,
+    super.validationMessages,
+    ShowErrorsFunction? super.showErrors,
     DropdownButtonBuilder? selectedItemBuilder,
     Widget? hint,
     VoidCallback? onTap,
@@ -42,12 +42,6 @@ class CustomDropdownField<T, V> extends ReactiveFormField<T, V> {
     Widget? tooltipIcon,
   })  : assert(itemHeight == null || itemHeight > 0),
         super(
-          key: key,
-          formControl: formControl,
-          formControlName: formControlName,
-          valueAccessor: valueAccessor,
-          validationMessages: validationMessages,
-          showErrors: showErrors,
           builder: (field) {
             final borderRadiusValue = $styles.corners.xs;
 

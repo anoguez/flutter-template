@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_template/common_libs.dart';
 import 'package:flutter_template/ui/common/popup_menu.dart';
@@ -7,6 +5,9 @@ import 'package:flutter_template/ui/screens/home.dart';
 import 'package:flutter_template/ui/screens/root_page.dart';
 import 'package:flutter_template/ui/screens/screen1.dart';
 import 'package:flutter_template/ui/screens/splash_screen.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'go_router.g.dart';
 
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
@@ -19,7 +20,8 @@ class ScreenPaths {
   static String screen1 = '/screen1';
 }
 
-final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
+@riverpod
+GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
     navigatorKey: _rootNavigator,
     initialLocation: '/',
@@ -60,21 +62,19 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
       ),
     ],
   );
-});
+}
 
 class AppRoute extends GoRoute {
   AppRoute(
     String path,
     Widget Function(GoRouterState s) builder, {
-    List<GoRoute> routes = const [],
+    List<GoRoute> super.routes = const [],
     bool useFade = false,
     bool useTransitionAnimation = true,
-    GlobalKey<NavigatorState>? parentNavigatorKey,
+    super.parentNavigatorKey,
   }) : super(
           path: path,
           name: path,
-          routes: routes,
-          parentNavigatorKey: parentNavigatorKey,
           pageBuilder: (context, state) {
             final pageContent = Scaffold(
               body: builder(state),
@@ -107,16 +107,17 @@ class AppRoute extends GoRoute {
 }
 
 FutureOr<String?> _handleRedirect(
-  BuildContext _,
+  BuildContext context,
   GoRouterState state,
   ProviderRef ref,
 ) async {
   final appLogic = ref.read(appLogicProvider);
+
   // Prevent anyone from navigating away from `/` if app is starting up.
-  if (!appLogic.isBootstrapComplete && state.location != ScreenPaths.splash) {
+  if (!appLogic.isBootstrapComplete && state.fullPath != ScreenPaths.splash) {
     return ScreenPaths.splash;
   }
-  debugPrint('Navigate to: ${state.location}');
+  debugPrint('Navigate to: ${state.fullPath}');
 
   // final authRepository = ref.read(authRepositoryProvider);
   // final authSession = await authRepository.getAuthData();

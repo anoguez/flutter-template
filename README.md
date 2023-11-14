@@ -24,6 +24,9 @@ If using VScode, there are 2 pre configured tasks on **./.vscode/tasks.json**
 - flutter pub get
 
 
+### Generator
+```dart run build_runner watch```
+
 ### Localizations
 Localization files should be added in the **/lib/l10n** folder
 
