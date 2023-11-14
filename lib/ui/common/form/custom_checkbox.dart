@@ -3,15 +3,13 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 class CustomCheckbox extends ReactiveFormField<bool, bool> {
   CustomCheckbox({
-    Key? key,
-    required String formControlName,
+    super.key,
+    required String super.formControlName,
     String? label,
     Color? activeColor,
     TextStyle? labelStyle,
     void Function(bool value)? onChanged,
   }) : super(
-          key: key,
-          formControlName: formControlName,
           builder: (field) {
             return Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,

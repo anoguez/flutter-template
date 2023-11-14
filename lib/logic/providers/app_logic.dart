@@ -5,17 +5,20 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_template/common_libs.dart';
 import 'package:flutter_template/router/go_router.dart';
 import 'package:flutter_template/ui/common/utils/page_routes.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final appLogicProvider = Provider((ref) => _AppLogic(ref: ref));
+part 'app_logic.g.dart';
 
-class _AppLogic {
-  final ProviderRef ref;
+@Riverpod(keepAlive: true)
+class AppLogic extends _$AppLogic {
+  @override
+  AppLogic build() {
+    return this;
+  }
 
   /// Indicates to the rest of the app that bootstrap has not completed.
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
-
-  _AppLogic({required this.ref});
 
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.

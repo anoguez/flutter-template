@@ -2,7 +2,7 @@
 import 'package:flutter_template/common_libs.dart';
 
 class AppScaffold extends StatelessWidget with GetItMixin {
-  AppScaffold({Key? key, required this.child}) : super(key: key);
+  AppScaffold({super.key, required this.child});
   final Widget child;
 
   @override

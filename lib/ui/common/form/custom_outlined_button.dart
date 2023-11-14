@@ -2,7 +2,7 @@ import 'package:flutter_template/common_libs.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
   const CustomOutlinedButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
     this.primaryColor,
@@ -11,9 +11,7 @@ class CustomOutlinedButton extends StatelessWidget {
     this.leadingIcon,
     this.fixedSize = const Size.fromWidth(80),
     this.borderRadius,
-  }) : super(
-          key: key,
-        );
+  });
 
   final String label;
   final void Function()? onPressed;

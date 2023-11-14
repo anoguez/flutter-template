@@ -19,12 +19,12 @@ typedef GetInitialTime = TimeOfDay Function(DateTime? fieldValue);
 
 class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
   CustomDateTimePicker({
-    Key? key,
-    String? formControlName,
-    FormControl<DateTime>? formControl,
+    super.key,
+    super.formControlName,
+    super.formControl,
     ControlValueAccessor<DateTime, String>? valueAccessor,
-    Map<String, ValidationMessageFunction>? validationMessages,
-    ShowErrorsFunction? showErrors,
+    super.validationMessages,
+    ShowErrorsFunction? super.showErrors,
     TextStyle? style,
     Color? placeholderColor,
     String? label,
@@ -63,13 +63,8 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
     TimePickerEntryMode timePickerEntryMode = TimePickerEntryMode.dial,
     RouteSettings? timePickerRouteSettings,
   }) : super(
-          key: key,
-          formControl: formControl,
-          formControlName: formControlName,
-          validationMessages: validationMessages,
           valueAccessor:
               valueAccessor ?? _effectiveValueAccessor(type, dateFormat),
-          showErrors: showErrors,
           builder: (field) {
             final borderRadius = $styles.corners.xs;
 

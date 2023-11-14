@@ -4,8 +4,8 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 class CustomTextField<T> extends ReactiveFormField<T, T> {
   CustomTextField({
-    Key? key,
-    required String formControlName,
+    super.key,
+    required String super.formControlName,
     String? label,
     String? suffixText,
     String? hintText,
@@ -27,8 +27,6 @@ class CustomTextField<T> extends ReactiveFormField<T, T> {
     Widget? tooltipIcon,
     void Function(T? value)? onChanged,
   }) : super(
-          key: key,
-          formControlName: formControlName,
           builder: (field) {
             final borderRadius = $styles.corners.xs;
             return ReactiveTextField(
