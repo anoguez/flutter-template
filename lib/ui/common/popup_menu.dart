@@ -31,7 +31,10 @@ class PopupMenu extends ConsumerWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             spacing: $styles.horizontalInsets.sm,
             children: [
-              Icon(Icons.settings, color: $styles.colors.accent2),
+              Icon(
+                Icons.settings,
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
               const Text('Settings'),
             ],
           ),

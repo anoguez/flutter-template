@@ -31,7 +31,7 @@ class CustomTextField<T> extends ReactiveFormField<T, T> {
             final borderRadius = $styles.corners.xs;
             return ReactiveTextField(
               formControlName: formControlName,
-              cursorColor: $styles.colors.accent1,
+              cursorColor: $styles.colors.midnightGreen,
               style: TextStyle(color: labelColor),
               obscureText: obscureText,
               maxLines: maxLines,
@@ -62,7 +62,7 @@ class CustomTextField<T> extends ReactiveFormField<T, T> {
                       style: TextStyle(
                         color: field.touched && field.errorText != null
                             ? $styles.colors.error
-                            : $styles.colors.black,
+                            : Colors.black,
                       ),
                     ),
                     if (showTooltipIcon)
@@ -79,17 +79,17 @@ class CustomTextField<T> extends ReactiveFormField<T, T> {
                 suffixText: suffixText,
                 hintText: hintText,
                 labelStyle: TextStyle(
-                  color: placeholderColor ?? $styles.colors.accent1,
+                  color: placeholderColor ?? $styles.colors.midnightGreen,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: enabledBorderColor ??
-                        $styles.colors.accent1.withOpacity(0.4),
+                        $styles.colors.midnightGreen.withOpacity(0.4),
                   ),
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: $styles.colors.accent1),
+                  borderSide: BorderSide(color: $styles.colors.midnightGreen),
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
                 focusedErrorBorder: OutlineInputBorder(

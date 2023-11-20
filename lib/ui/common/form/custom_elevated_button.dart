@@ -31,7 +31,7 @@ class CustomElevatedButton extends StatelessWidget {
         if (onPressed != null) onPressed!();
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryColor ?? $styles.colors.accent1,
+        backgroundColor: primaryColor ?? $styles.colors.midnightGreen,
         disabledBackgroundColor: $styles.colors.disabled,
         fixedSize: fixedSize,
         shape: RoundedRectangleBorder(
@@ -48,7 +48,7 @@ class CustomElevatedButton extends StatelessWidget {
             label,
             style: $styles.text.body
                 .copyWith(
-                  color: secondaryColor ?? $styles.colors.white,
+                  color: secondaryColor ?? Colors.white,
                 )
                 .merge(textStyle),
             textAlign: TextAlign.center,

@@ -26,7 +26,7 @@ class SettingsScreen extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Dark Mode"),
+                    const Text("Dark Mode"),
                     CustomSwitch(
                       formControlName: 'isDarkModeEnabled',
                       onChanged: (value) =>

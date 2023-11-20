@@ -87,7 +87,7 @@ class CustomDropdownField<T, V> extends ReactiveFormField<T, V> {
                       style: TextStyle(
                         color: field.errorText != null
                             ? $styles.colors.error
-                            : $styles.colors.black,
+                            : Colors.black,
                       ),
                     ),
                     if (showTooltipIcon)
@@ -101,17 +101,17 @@ class CustomDropdownField<T, V> extends ReactiveFormField<T, V> {
                   ],
                 ),
                 labelStyle: TextStyle(
-                  color: placeholderColor ?? $styles.colors.accent1,
+                  color: placeholderColor ?? $styles.colors.midnightGreen,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: enabledBorderColor ??
-                        $styles.colors.accent1.withOpacity(0.4),
+                        $styles.colors.midnightGreen.withOpacity(0.4),
                   ),
                   borderRadius: BorderRadius.circular(borderRadiusValue),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: $styles.colors.accent1),
+                  borderSide: BorderSide(color: $styles.colors.midnightGreen),
                   borderRadius: BorderRadius.circular(borderRadiusValue),
                 ),
                 focusedErrorBorder: OutlineInputBorder(

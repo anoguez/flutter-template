@@ -129,17 +129,19 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                               : Theme(
                                   data: ThemeData(
                                     colorScheme: ColorScheme.light(
-                                      primary: $styles.colors.accent1,
-                                      onPrimary: $styles.colors.white,
-                                      surface: $styles.colors.accent1,
-                                      onSurface: $styles.colors.black,
+                                      primary: $styles.colors.midnightGreen,
+                                      onPrimary: Colors.white,
+                                      surface: $styles.colors.midnightGreen,
+                                      onSurface: Colors.black,
                                     ),
                                     textTheme: TextTheme(
                                       titleMedium: TextStyle(
-                                        color: $styles.colors.accent2,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                       ),
                                     ),
-                                    dialogBackgroundColor: $styles.colors.white,
+                                    dialogBackgroundColor: Colors.white,
                                   ),
                                   child: child!,
                                 );
@@ -168,17 +170,19 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                               : Theme(
                                   data: ThemeData(
                                     colorScheme: ColorScheme.light(
-                                      primary: $styles.colors.accent1,
-                                      onPrimary: $styles.colors.white,
-                                      surface: $styles.colors.white,
-                                      onSurface: $styles.colors.black,
+                                      primary: $styles.colors.midnightGreen,
+                                      onPrimary: Colors.white,
+                                      surface: Colors.white,
+                                      onSurface: Colors.black,
                                     ),
                                     textTheme: TextTheme(
                                       titleMedium: TextStyle(
-                                        color: $styles.colors.accent2,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                       ),
                                     ),
-                                    dialogBackgroundColor: $styles.colors.white,
+                                    dialogBackgroundColor: Colors.white,
                                   ),
                                   child: child!,
                                 );
@@ -237,7 +241,7 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                             style: TextStyle(
                               color: field.errorText != null
                                   ? $styles.colors.error
-                                  : $styles.colors.black,
+                                  : Colors.black,
                             ),
                           ),
                           if (showTooltipIcon)
@@ -252,17 +256,18 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                         ],
                       ),
                       labelStyle: TextStyle(
-                        color: placeholderColor ?? $styles.colors.accent2,
+                        color: placeholderColor ?? $styles.colors.silverPink,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: enabledBorderColor ??
-                              $styles.colors.accent1.withOpacity(0.4),
+                              $styles.colors.midnightGreen.withOpacity(0.4),
                         ),
                         borderRadius: BorderRadius.circular(borderRadius),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: $styles.colors.accent1),
+                        borderSide:
+                            BorderSide(color: $styles.colors.midnightGreen),
                         borderRadius: BorderRadius.circular(borderRadius),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
@@ -281,7 +286,7 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                       style: TextStyle(
                         color: field.errorText != null
                             ? $styles.colors.error
-                            : $styles.colors.black,
+                            : Colors.black,
                       ).merge(style),
                     ),
                   ),

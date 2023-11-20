@@ -4,11 +4,9 @@ import 'package:flutter_template/logic/common/color_utils.dart';
 @immutable
 class AppColors {
   /// Common
-  final Color accent1 = const Color(0xFF00555E);
-  final Color accent2 = const Color(0xFFBEABA1);
+  final Color midnightGreen = const Color(0xFF00555E);
+  final Color silverPink = const Color(0xFFBEABA1);
   final Color offWhite = const Color(0xFFF8ECE5);
-  final Color white = Colors.white;
-  final Color black = Colors.black;
   final Color error = Colors.red;
   final Color disabled = Colors.grey.withOpacity(0.4);
 
@@ -23,28 +21,28 @@ class AppThemes {
   final ColorScheme lightTheme = const ColorScheme(
     brightness: Brightness.light,
     primary: Colors.amber,
+    onPrimary: Colors.black,
     secondary: Colors.pink,
-    error: Colors.red,
+    onSecondary: Colors.grey,
     background: Colors.white,
-    surface: Colors.white,
-    onPrimary: Colors.white,
-    onSecondary: Colors.white,
-    onError: Colors.white,
     onBackground: Colors.white,
+    surface: Colors.white,
     onSurface: Colors.white,
+    error: Colors.red,
+    onError: Colors.white,
   );
 
   final ColorScheme darkTheme = const ColorScheme(
     brightness: Brightness.dark,
-    primary: Colors.blue,
-    secondary: Colors.green,
-    error: Colors.red,
-    background: Colors.white,
-    surface: Colors.white,
-    onPrimary: Colors.white,
-    onSecondary: Colors.white,
-    onError: Colors.white,
+    primary: Colors.purple,
+    onPrimary: Colors.grey,
+    secondary: Colors.purple,
+    onSecondary: Colors.grey,
+    background: Colors.black,
     onBackground: Colors.white,
+    surface: Colors.black,
     onSurface: Colors.white,
+    error: Colors.red,
+    onError: Colors.white,
   );
 }
