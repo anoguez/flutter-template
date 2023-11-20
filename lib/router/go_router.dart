@@ -3,7 +3,7 @@ import 'package:flutter_template/common_libs.dart';
 import 'package:flutter_template/ui/common/popup_menu.dart';
 import 'package:flutter_template/ui/screens/home.dart';
 import 'package:flutter_template/ui/screens/root_page.dart';
-import 'package:flutter_template/ui/screens/screen1.dart';
+import 'package:flutter_template/ui/screens/settings/settings_screen.dart';
 import 'package:flutter_template/ui/screens/splash_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -54,7 +54,7 @@ GoRouter goRouter(GoRouterRef ref) {
           ),
           AppRoute(
             ScreenPaths.screen1,
-            (state) => Screen1(key: state.pageKey),
+            (state) => SettingsScreen(key: state.pageKey),
             useTransitionAnimation: false,
           ),
         ],
