@@ -1,9 +1,9 @@
 # Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+# security unlock-keychain -psecurity unlock-keychain -p
 
 default_platform(:ios)
 
-TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+TEMP_KEYCHAIN_PASSWORD = ''
 TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
 
 platform :ios do
