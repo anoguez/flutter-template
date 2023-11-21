@@ -1,23 +1,17 @@
-
 import 'package:flutter_template/common_libs.dart';
 
-class AppScaffold extends StatelessWidget with GetItMixin {
-  AppScaffold({super.key, required this.child});
+class AppScaffold extends ConsumerWidget {
+  const AppScaffold({
+    super.key,
+    required this.child,
+  });
   final Widget child;
 
   @override
-  Widget build(BuildContext context) {
-    Animate.defaultDuration = $styles.times.fast;
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
       children: [
-        Theme(
-          data: $styles.colors.toThemeData(),
-          // Provide a default texts style to allow Hero's to render text properly
-          child: DefaultTextStyle(
-            style: $styles.text.body,
-            child: child,
-          ),
-        ),
+        child,
       ],
     );
   }

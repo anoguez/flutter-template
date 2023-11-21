@@ -32,7 +32,7 @@ class CustomOutlinedButton extends StatelessWidget {
         backgroundColor: Colors.transparent,
         disabledBackgroundColor: $styles.colors.disabled,
         fixedSize: fixedSize,
-        side: BorderSide(color: primaryColor ?? $styles.colors.accent1),
+        side: BorderSide(color: primaryColor ?? $styles.colors.midnightGreen),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 24.r),
         ),
@@ -46,7 +46,7 @@ class CustomOutlinedButton extends StatelessWidget {
             label,
             style: $styles.text.body
                 .copyWith(
-                  color: secondaryColor ?? $styles.colors.black,
+                  color: secondaryColor ?? Colors.black,
                 )
                 .merge(textStyle),
             textAlign: TextAlign.center,

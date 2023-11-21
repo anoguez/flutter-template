@@ -31,7 +31,7 @@ class DashedDivider extends StatelessWidget {
                 height: height,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: color ?? $styles.colors.accent1,
+                    color: color ?? $styles.colors.midnightGreen,
                   ),
                 ),
               );

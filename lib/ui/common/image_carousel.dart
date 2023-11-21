@@ -61,8 +61,8 @@ class ImageCarousel extends HookWidget {
             bottom: 10.h,
             right: 16.w,
             child: SliderPoints(
-              selectedColor: $styles.colors.accent1,
-              unselectedColor: $styles.colors.accent2,
+              selectedColor: $styles.colors.midnightGreen,
+              unselectedColor: Theme.of(context).colorScheme.secondary,
               itemCount: pages.length,
               maxAllowedIndex: maxAllowedIndex ?? pages.length,
               selectedIndex: selectedIndex.value,
