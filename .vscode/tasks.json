@@ -29,6 +29,21 @@
             "detail": ""
         },
         {
+            "type": "flutter",
+            "command": "dart",
+            "args": [
+                "run",
+                "build_runner",
+                "watch"
+            ],
+            "problemMatcher": [
+                "$dart-build_runner"
+            ],
+            "group": "build",
+            "label": "flutter: flutter build_runner watch",
+            "detail": ""
+        },
+        {
             "type": "shell",
             "command": "flutter pub run flutter_native_splash:create",
             "options": {

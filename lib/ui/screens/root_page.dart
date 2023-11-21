@@ -11,28 +11,33 @@ class RootPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final tabController = usePersistentTabController();
+    final colorScheme = Theme.of(context).colorScheme;
 
     return PersistentTabView(
       context,
       controller: tabController,
+      backgroundColor: colorScheme.background,
       items: [
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.home),
           title: ("Home"),
-          activeColorPrimary: $styles.colors.accent1,
-          inactiveColorPrimary: $styles.colors.accent2,
+          activeColorPrimary: colorScheme.primary,
+          inactiveColorPrimary: colorScheme.onSecondary,
+          activeColorSecondary: colorScheme.onPrimary,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.settings),
           title: ("Settings"),
-          activeColorPrimary: $styles.colors.accent1,
-          inactiveColorPrimary: $styles.colors.accent2,
+          activeColorPrimary: colorScheme.primary,
+          inactiveColorPrimary: colorScheme.onSecondary,
+          activeColorSecondary: colorScheme.onPrimary,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.account_circle),
           title: ("Account"),
-          activeColorPrimary: $styles.colors.accent1,
-          inactiveColorPrimary: $styles.colors.accent2,
+          activeColorPrimary: colorScheme.primary,
+          inactiveColorPrimary: colorScheme.onSecondary,
+          activeColorSecondary: colorScheme.onPrimary,
         ),
       ],
       navBarStyle: NavBarStyle.style1,

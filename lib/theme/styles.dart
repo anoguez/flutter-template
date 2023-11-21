@@ -12,6 +12,8 @@ class AppStyle {
   /// The current theme colors for the app
   final AppColors colors = AppColors();
 
+  final AppThemes appTheme = AppThemes();
+
   /// Rounded edge corner radii
   late final _Corners corners = _Corners();
 

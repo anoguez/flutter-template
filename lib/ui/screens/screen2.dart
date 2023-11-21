@@ -1,5 +1,5 @@
 import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/ui/screens/screen1.dart';
+import 'package:flutter_template/ui/screens/settings/settings_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Screen2 extends StatelessWidget {
@@ -17,7 +17,7 @@ class Screen2 extends StatelessWidget {
               // context.push(ScreenPaths.screen1);
               PersistentNavBarNavigator.pushNewScreen(
                 context,
-                screen: const Screen1(),
+                screen: const SettingsScreen(),
                 pageTransitionAnimation: PageTransitionAnimation.cupertino,
               );
             },

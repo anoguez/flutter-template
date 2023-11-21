@@ -2,6 +2,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/logic/providers/theme_provider.dart';
 import 'package:flutter_template/router/go_router.dart';
 import 'package:flutter_template/ui/common/app_scaffold.dart';
 
@@ -18,10 +19,12 @@ void main() async {
 
   await container.read(appLogicProvider).bootstrap();
 
-  runApp(UncontrolledProviderScope(
-    container: container,
-    child: const MyApp(),
-  ));
+  runApp(
+    UncontrolledProviderScope(
+      container: container,
+      child: const MyApp(),
+    ),
+  );
 
   // Remove splash screen when bootstrap is complete
   FlutterNativeSplash.remove();
@@ -33,8 +36,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(goRouterProvider);
-    // final locale = watchX((SettingsLogic s) => s.currentLocale);
-    const locale = "en";
+    final themeModeState = ref.watch(appThemeProvider);
 
     return ProviderScope(
       child: ScreenUtilInit(
@@ -43,12 +45,12 @@ class MyApp extends ConsumerWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp.router(
-            locale: locale == null ? null : const Locale(locale),
+            locale: const Locale("en"),
             debugShowCheckedModeBanner: false,
             routerDelegate: appRouter.routerDelegate,
             routeInformationProvider: appRouter.routeInformationProvider,
             routeInformationParser: appRouter.routeInformationParser,
-            theme: ThemeData(fontFamily: $styles.text.body.fontFamily),
+            theme: themeModeState,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
