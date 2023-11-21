@@ -24,17 +24,17 @@ platform :ios do
 
     app_store_connect_api_key()
 
-    # remove_temp_keychain
+    remove_temp_keychain
 
-    # setup_ci if is_ci
+    setup_ci if is_ci
     
-    # setup_jenkins(
-    #     unlock_keychain: true,
-    #     keychain_password: TEMP_KEYCHAIN_PASSWORD,
-    #     output_directory: ENV["OUTPUT_FILES_PATH"],
-    #     add_keychain_to_search_list: true,
-    #     set_default_keychain: true
-    # )
+    setup_jenkins(
+        unlock_keychain: true,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD,
+        output_directory: ENV["OUTPUT_FILES_PATH"],
+        add_keychain_to_search_list: true,
+        set_default_keychain: true
+    )
     
 
     cocoapods(clean_install: is_ci)
@@ -97,7 +97,7 @@ platform :ios do
     puts "build process started..."
 
     # Ensure that the git status is clean and no megre head or un-commited code exists
-    # ensure_git_status_clean
+    ensure_git_status_clean
 
     # RUN LANE TO GET CERTS
     # certs
@@ -143,9 +143,6 @@ platform :ios do
 
     # RUN BUILD LANE
     build
-
-    # GET GIT CHANGELOG
-    # changelog_from_git_commits
     
     # UPLOAD TO TEST FLIGTH
     pilot(
