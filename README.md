@@ -47,3 +47,11 @@ Check unused localization in *.dart files.
 
 Checks unused code in *.dart files.
 ```dart run dart_code_metrics:metrics check-unused-code lib```
+
+
+### Fastlane
+[Generate new session](https://docs.fastlane.tools/getting-started/ios/authentication/)
+```fastlane spaceauth -u user@email.com```
+
+Invalidate stored session
+```rm ~/.fastlane/spaceship/user@email.com/cookie```
