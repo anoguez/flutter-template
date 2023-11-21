@@ -37,8 +37,6 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(goRouterProvider);
     final themeModeState = ref.watch(appThemeProvider);
-    // final locale = watchX((SettingsLogic s) => s.currentLocale);
-    const locale = "en";
 
     return ProviderScope(
       child: ScreenUtilInit(
@@ -47,7 +45,7 @@ class MyApp extends ConsumerWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp.router(
-            locale: locale == null ? null : const Locale(locale),
+            locale: const Locale("en"),
             debugShowCheckedModeBanner: false,
             routerDelegate: appRouter.routerDelegate,
             routeInformationProvider: appRouter.routeInformationProvider,

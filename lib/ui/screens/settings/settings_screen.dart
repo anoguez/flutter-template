@@ -1,5 +1,5 @@
 import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/logic/providers/settings.dart';
+import 'package:flutter_template/logic/providers/settings_provider.dart';
 import 'package:flutter_template/ui/common/custom_card.dart';
 import 'package:flutter_template/ui/common/form/custom_switch.dart';
 import 'package:reactive_forms/reactive_forms.dart';

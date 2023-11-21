@@ -2,7 +2,7 @@ import 'package:flutter_template/logic/providers/theme_provider.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'settings.g.dart';
+part 'settings_provider.g.dart';
 
 @riverpod
 class Settings extends _$Settings {
