@@ -110,7 +110,7 @@ pipeline {
 
         stage('Update Dependencies') {
             steps {
-                sh "flutter pub upgrade"
+                sh "flutter upgrade"
                 sh "flutter pub get"
             }
         }
