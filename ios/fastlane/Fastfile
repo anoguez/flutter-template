@@ -39,26 +39,7 @@ platform :ios do
 
     cocoapods(clean_install: is_ci)
 
-    update_code_signing_settings(
-        use_automatic_signing: false,
-        path: "../ios/Runner.xcodeproj",
-        code_sign_identity: "Apple Distribution"
-    )
-
-    sync_code_signing(
-        app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
-        type: 'appstore', 
-        readonly: is_ci,
-        output_path: ENV["OUTPUT_FILES_PATH"],
-        force_for_new_devices: false,
-        generate_apple_certs: false,
-        verbose: true,
-        fail_on_name_taken: false,
-        keychain_name: TEMP_KEYCHAIN_NAME,
-        keychain_password: TEMP_KEYCHAIN_PASSWORD
-    )
-
-    # Get a new certificate for push notifications
+     # Get a new certificate for push notifications
     get_push_certificate( 
         output_path: ENV["OUTPUT_FILES_PATH"]
     )
@@ -74,12 +55,31 @@ platform :ios do
       filename: "app.mobileprovision"
     )
 
+    update_code_signing_settings(
+        use_automatic_signing: false,
+        path: "../ios/Runner.xcodeproj",
+        code_sign_identity: "Apple Distribution"
+    )
+
     # Set the project provisioning profile (related in Xcode to the General > Signing Release section)
     update_project_provisioning( 
       xcodeproj: "Runner.xcodeproj",
       target_filter: ENV['APP_NAME'], # Name of your project
       profile: "app.mobileprovision",
       build_configuration: "Release"
+    )
+
+    match(
+        app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
+        type: 'appstore', 
+        readonly: is_ci,
+        output_path: ENV["OUTPUT_FILES_PATH"],
+        force_for_new_devices: false,
+        generate_apple_certs: false,
+        verbose: true,
+        fail_on_name_taken: false,
+        keychain_name: TEMP_KEYCHAIN_NAME,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD
     )
 
     # Set the right team on your project
