@@ -28,13 +28,14 @@ platform :ios do
     remove_temp_keychain
 
     if is_ci
-        setup_jenkins(
-            unlock_keychain: true,
-            keychain_password: TEMP_KEYCHAIN_PASSWORD,
-            output_directory: ENV["OUTPUT_FILES_PATH"],
-            # add_keychain_to_search_list: true,
-            set_default_keychain: true
-        )
+        # setup_jenkins(
+        #     unlock_keychain: true,
+        #     keychain_password: TEMP_KEYCHAIN_PASSWORD,
+        #     output_directory: ENV["OUTPUT_FILES_PATH"],
+        #     # add_keychain_to_search_list: true,
+        #     set_default_keychain: true
+        # )
+        setup_ci
         cocoapods(clean_install: true)
     end
 
