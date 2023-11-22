@@ -27,18 +27,16 @@ platform :ios do
 
     remove_temp_keychain
 
-    # setup_ci if is_ci
-    
-    setup_jenkins(
-        unlock_keychain: true,
-        keychain_password: TEMP_KEYCHAIN_PASSWORD,
-        output_directory: ENV["OUTPUT_FILES_PATH"],
-        add_keychain_to_search_list: true,
-        set_default_keychain: true
-    ) if is_ci
-    
-
-    cocoapods(clean_install: is_ci)
+    if is_ci
+        setup_jenkins(
+            unlock_keychain: true,
+            keychain_password: TEMP_KEYCHAIN_PASSWORD,
+            output_directory: ENV["OUTPUT_FILES_PATH"],
+            add_keychain_to_search_list: true,
+            set_default_keychain: true
+        )
+        cocoapods(clean_install: true)
+    end
 
      # Get a new certificate for push notifications
     get_push_certificate( 
