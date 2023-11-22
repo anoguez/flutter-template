@@ -69,6 +69,11 @@ platform :ios do
       build_configuration: "Release"
     )
 
+    # Set the right team on your project
+    update_project_team( 
+      teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+    )
+
     match(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
@@ -82,12 +87,7 @@ platform :ios do
         keychain_password: TEMP_KEYCHAIN_PASSWORD
     )
 
-    # Set the right team on your project
-    update_project_team( 
-      teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
-    )
-
-    gym
+    # gym # alias for "build_app"
   end
 
   private_lane :build do
