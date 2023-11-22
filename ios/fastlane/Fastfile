@@ -24,13 +24,13 @@ platform :ios do
 
     app_store_connect_api_key()
 
-    # remove_temp_keychain
+    remove_temp_keychain
 
     setup_ci if is_ci
     
     setup_jenkins(
-        # unlock_keychain: true,
-        # keychain_password: TEMP_KEYCHAIN_PASSWORD,
+        unlock_keychain: true,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD,
         output_directory: ENV["OUTPUT_FILES_PATH"],
         add_keychain_to_search_list: true,
         set_default_keychain: true
@@ -42,12 +42,10 @@ platform :ios do
     update_code_signing_settings(
         use_automatic_signing: false,
         path: "../ios/Runner.xcodeproj",
-        code_sign_identity: "Apple Distribution",
-        # profile_name: "match AppStore com.appbundle.id",
-        # bundle_identifier: "com.appbundle.id"
+        code_sign_identity: "Apple Distribution"
     )
 
-    match(
+    sync_code_signing(
         app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
         type: 'appstore', 
         readonly: is_ci,
@@ -56,8 +54,8 @@ platform :ios do
         generate_apple_certs: false,
         verbose: true,
         fail_on_name_taken: false
-        # keychain_name: TEMP_KEYCHAIN_NAME,
-        # keychain_password: TEMP_KEYCHAIN_PASSWORD
+        keychain_name: TEMP_KEYCHAIN_NAME,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD
     )
 
     # Get a new certificate for push notifications
