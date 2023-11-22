@@ -148,7 +148,7 @@ platform :ios do
       skip_submission: true,
       distribute_external: false,
       notify_external_testers: false,
-      changelog: release_notes
+    #   changelog: release_notes
     )
     
   end
