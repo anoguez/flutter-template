@@ -3,9 +3,9 @@
 
 default_platform(:ios)
 
-TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+# TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
 TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
-# TEMP_KEYCHAIN_PASSWORD = ''
+TEMP_KEYCHAIN_PASSWORD = ''
 
 platform :ios do
 
@@ -25,14 +25,14 @@ platform :ios do
 
     if is_ci
         remove_temp_keychain
-        setup_jenkins(
-            unlock_keychain: true,
-            keychain_password: TEMP_KEYCHAIN_PASSWORD,
-            output_directory: ENV["OUTPUT_FILES_PATH"],
-            add_keychain_to_search_list: true,
-            set_default_keychain: true
-        )
-        # setup_ci
+        # setup_jenkins(
+        #     unlock_keychain: true,
+        #     keychain_password: TEMP_KEYCHAIN_PASSWORD,
+        #     output_directory: ENV["OUTPUT_FILES_PATH"],
+        #     add_keychain_to_search_list: true,
+        #     set_default_keychain: true
+        # )
+        setup_ci
         cocoapods(clean_install: true)
     end
 
