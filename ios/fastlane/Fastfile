@@ -23,21 +23,20 @@ platform :ios do
 
   lane :certs do
 
-    app_store_connect_api_key()
-
-    remove_temp_keychain
-
     if is_ci
-        # setup_jenkins(
-        #     unlock_keychain: true,
-        #     keychain_password: TEMP_KEYCHAIN_PASSWORD,
-        #     output_directory: ENV["OUTPUT_FILES_PATH"],
-        #     # add_keychain_to_search_list: true,
-        #     set_default_keychain: true
-        # )
-        setup_ci
+        remove_temp_keychain
+        setup_jenkins(
+            unlock_keychain: true,
+            keychain_password: TEMP_KEYCHAIN_PASSWORD,
+            output_directory: ENV["OUTPUT_FILES_PATH"],
+            # add_keychain_to_search_list: true,
+            set_default_keychain: true
+        )
+        # setup_ci
         cocoapods(clean_install: true)
     end
+
+    app_store_connect_api_key()
 
      # Get a new certificate for push notifications
     get_push_certificate( 
@@ -87,7 +86,6 @@ platform :ios do
         keychain_password: TEMP_KEYCHAIN_PASSWORD
     )
 
-    # gym # alias for "build_app"
   end
 
   private_lane :build do
@@ -124,8 +122,8 @@ platform :ios do
     # Push the new commit and tag back to your git remote
     # push_to_git_remote
 
-    # BUILD APP
-    build_app(
+    # alias for "build_app"
+    gym(
         workspace: "Runner.xcworkspace", 
         scheme: "Runner",
         clean: true,
