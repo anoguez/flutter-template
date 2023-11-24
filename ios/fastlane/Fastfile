@@ -65,14 +65,14 @@ platform :ios do
 
     update_code_signing_settings(
         use_automatic_signing: false,
-        path: "../ios/Runner.xcodeproj",
-        code_sign_identity: "Apple Distribution"
+        # path: "../ios/Runner.xcodeproj",
+        code_sign_identity: "iPhone Distribution"
     )
 
     # Set the project provisioning profile (related in Xcode to the General > Signing Release section)
     update_project_provisioning( 
       xcodeproj: "Runner.xcodeproj",
-      target_filter: ENV['APP_NAME'], # Name of your project
+      target_filter: ENV['APP_NAME'],S
       profile: "app.mobileprovision",
       build_configuration: "Release"
     )
