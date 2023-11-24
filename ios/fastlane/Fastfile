@@ -25,14 +25,6 @@ platform :ios do
 
     if is_ci
         remove_temp_keychain
-        # setup_jenkins(
-        #     unlock_keychain: true,
-        #     keychain_password: TEMP_KEYCHAIN_PASSWORD,
-        #     output_directory: ENV["OUTPUT_FILES_PATH"],
-        #     add_keychain_to_search_list: true,
-        #     set_default_keychain: true
-        # )
-        # setup_ci
         create_keychain(
             default_keychain: true,
             name: TEMP_KEYCHAIN_NAME,
@@ -66,7 +58,8 @@ platform :ios do
     update_code_signing_settings(
         use_automatic_signing: false,
         # path: "../ios/Runner.xcodeproj",
-        code_sign_identity: "iPhone Distribution"
+        team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+        # code_sign_identity: "iPhone Distribution",
     )
 
     # Set the project provisioning profile (related in Xcode to the General > Signing Release section)
