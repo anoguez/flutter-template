@@ -32,7 +32,7 @@ platform :ios do
         #     add_keychain_to_search_list: true,
         #     set_default_keychain: true
         # )
-        setup_ci
+        # setup_ci
         cocoapods(clean_install: true)
     end
 
