@@ -33,6 +33,15 @@ platform :ios do
         #     set_default_keychain: true
         # )
         # setup_ci
+        create_keychain(
+            default_keychain: true,
+            name: TEMP_KEYCHAIN_NAME,
+            password: TEMP_KEYCHAIN_PASSWORD,
+            unlock: true,
+            timeout: 3600,
+            lock_when_sleeps: true,
+            require_create: true,
+        )
         cocoapods(clean_install: true)
     end
 
@@ -91,6 +100,12 @@ platform :ios do
   private_lane :build do
     
     puts "build process started..."
+
+    unlock_keychain(
+        set_default: true,
+        path: TEMP_KEYCHAIN_NAME,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD
+    )
 
     # Ensure that the git status is clean and no megre head or un-commited code exists
     # ensure_git_status_clean
