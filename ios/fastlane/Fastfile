@@ -72,7 +72,7 @@ platform :ios do
     # Set the project provisioning profile (related in Xcode to the General > Signing Release section)
     update_project_provisioning( 
       xcodeproj: "Runner.xcodeproj",
-      target_filter: ENV['APP_NAME'],S
+      target_filter: ENV['APP_NAME'],
       profile: "app.mobileprovision",
       build_configuration: "Release"
     )
