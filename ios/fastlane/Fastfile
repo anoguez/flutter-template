@@ -104,7 +104,7 @@ platform :ios do
     unlock_keychain(
         set_default: true,
         path: TEMP_KEYCHAIN_NAME,
-        keychain_password: TEMP_KEYCHAIN_PASSWORD
+        password: TEMP_KEYCHAIN_PASSWORD
     )
 
     # Ensure that the git status is clean and no megre head or un-commited code exists
