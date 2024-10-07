@@ -1,13 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/ui/common/popup_menu.dart';
-import 'package:flutter_template/ui/screens/home.dart';
-import 'package:flutter_template/ui/screens/root_page.dart';
-import 'package:flutter_template/ui/screens/settings/settings_screen.dart';
-import 'package:flutter_template/ui/screens/splash_screen.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'go_router.g.dart';
+import 'package:flutter_template/src/presentation/common/app_scaffold.dart';
+import 'package:flutter_template/src/presentation/common/popup_menu.dart';
+import 'package:flutter_template/src/presentation/views/home/home.dart';
+import 'package:flutter_template/src/presentation/views/screen2/screen2.dart';
+import 'package:flutter_template/src/presentation/views/screen3/screen3.dart';
+import 'package:flutter_template/src/presentation/views/settings/settings_screen.dart';
+import 'package:flutter_template/src/presentation/views/splash_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
@@ -18,51 +19,57 @@ class ScreenPaths {
   static String splash = '/splash';
   static String home = '/home';
   static String screen1 = '/screen1';
+  static String screen2 = '/screen2';
+  static String settings = '/settings';
 }
 
-@riverpod
-GoRouter goRouter(GoRouterRef ref) {
-  return GoRouter(
-    navigatorKey: _rootNavigator,
-    initialLocation: '/',
-    redirect: (context, state) => _handleRedirect(context, state, ref),
-    routes: [
-      AppRoute(ScreenPaths.splash, (_) => const SplashScreen()),
+GoRouter goRouter() => GoRouter(
+      navigatorKey: _rootNavigator,
+      initialLocation: ScreenPaths.root,
+      redirect: (context, state) => _handleRedirect(context, state),
+      routes: [
+        AppRoute(ScreenPaths.splash, (_) => const SplashScreen()),
 
-      // SHELL ROUTES
-      ShellRoute(
-        navigatorKey: _shellNavigator,
-        builder: (context, state, child) => Scaffold(
-          appBar: AppBar(
-            title: const Text("Test"),
-            actions: const [
-              PopupMenu(),
-            ],
+        // SHELL ROUTES
+        ShellRoute(
+          navigatorKey: _shellNavigator,
+          builder: (context, state, child) => Scaffold(
+            appBar: AppBar(
+              title: const Text("Test"),
+              actions: const [
+                PopupMenu(),
+              ],
+            ),
+            body: child,
           ),
-          body: child,
+          routes: [
+            AppRoute(
+              ScreenPaths.root,
+              (state) => AppScaffold(
+                key: state.pageKey,
+                pages: const [
+                  HomeScreen(key: Key('home screen')),
+                  Screen2(key: Key('Screen2')),
+                  Screen3(key: Key('Screen3')),
+                ],
+              ),
+              useTransitionAnimation: false,
+            ),
+            AppRoute(
+              ScreenPaths.home,
+              (state) => HomeScreen(key: state.pageKey),
+              useTransitionAnimation: false,
+            ),
+            AppRoute(
+              ScreenPaths.screen1,
+              (state) => SettingsScreen(key: state.pageKey),
+              useTransitionAnimation: false,
+            ),
+          ],
+          observers: const [],
         ),
-        routes: [
-          AppRoute(
-            "/",
-            (state) => RootPage(key: state.pageKey),
-            useTransitionAnimation: false,
-          ),
-          AppRoute(
-            ScreenPaths.home,
-            (state) => HomeScreen(key: state.pageKey),
-            useTransitionAnimation: false,
-          ),
-          AppRoute(
-            ScreenPaths.screen1,
-            (state) => SettingsScreen(key: state.pageKey),
-            useTransitionAnimation: false,
-          ),
-        ],
-        observers: const [],
-      ),
-    ],
-  );
-}
+      ],
+    );
 
 class AppRoute extends GoRoute {
   AppRoute(
@@ -109,19 +116,17 @@ class AppRoute extends GoRoute {
 FutureOr<String?> _handleRedirect(
   BuildContext context,
   GoRouterState state,
-  ProviderRef ref,
 ) async {
-  final appLogic = ref.read(appLogicProvider);
-
   // Prevent anyone from navigating away from `/` if app is starting up.
-  if (!appLogic.isBootstrapComplete && state.fullPath != ScreenPaths.splash) {
-    return ScreenPaths.splash;
-  }
+  // if (!appLogic.isBootstrapComplete && state.fullPath != ScreenPaths.splash) {
+  //   return ScreenPaths.splash;
+  // }
   debugPrint('Navigate to: ${state.fullPath}');
 
   // final authRepository = ref.read(authRepositoryProvider);
   // final authSession = await authRepository.getAuthData();
 
+  // TODO: fixme
   // if (appLogic.isBootstrapComplete &&
   //     !authSession.isSignedIn &&
   //     ![

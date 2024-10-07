@@ -1,10 +1,11 @@
 # Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+# security unlock-keychain -psecurity unlock-keychain -p
 
 default_platform(:ios)
 
-TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+# TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
 TEMP_KEYCHAIN_NAME = "fastlane_tmp_keychain"
+TEMP_KEYCHAIN_PASSWORD = ''
 
 platform :ios do
 
@@ -22,45 +23,23 @@ platform :ios do
 
   lane :certs do
 
+    if is_ci
+        remove_temp_keychain
+        create_keychain(
+            default_keychain: true,
+            name: TEMP_KEYCHAIN_NAME,
+            password: TEMP_KEYCHAIN_PASSWORD,
+            unlock: true,
+            timeout: 3600,
+            lock_when_sleeps: true,
+            require_create: true,
+        )
+        cocoapods(clean_install: true)
+    end
+
     app_store_connect_api_key()
 
-    # remove_temp_keychain
-
-    # setup_ci if is_ci
-    
-    # setup_jenkins(
-    #     unlock_keychain: true,
-    #     keychain_password: TEMP_KEYCHAIN_PASSWORD,
-    #     output_directory: ENV["OUTPUT_FILES_PATH"],
-    #     add_keychain_to_search_list: true,
-    #     set_default_keychain: true
-    # )
-    
-
-    cocoapods(clean_install: is_ci)
-
-    update_code_signing_settings(
-        use_automatic_signing: false,
-        path: "../ios/Runner.xcodeproj",
-        code_sign_identity: "Apple Distribution",
-        # profile_name: "match AppStore com.appbundle.id",
-        # bundle_identifier: "com.appbundle.id"
-    )
-
-    match(
-        app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
-        type: 'appstore', 
-        readonly: is_ci,
-        output_path: ENV["OUTPUT_FILES_PATH"],
-        force_for_new_devices: false,
-        generate_apple_certs: false,
-        verbose: true,
-        fail_on_name_taken: false
-        # keychain_name: TEMP_KEYCHAIN_NAME,
-        # keychain_password: TEMP_KEYCHAIN_PASSWORD
-    )
-
-    # Get a new certificate for push notifications
+     # Get a new certificate for push notifications
     get_push_certificate( 
         output_path: ENV["OUTPUT_FILES_PATH"]
     )
@@ -76,10 +55,17 @@ platform :ios do
       filename: "app.mobileprovision"
     )
 
+    update_code_signing_settings(
+        use_automatic_signing: false,
+        # path: "../ios/Runner.xcodeproj",
+        team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+        # code_sign_identity: "iPhone Distribution",
+    )
+
     # Set the project provisioning profile (related in Xcode to the General > Signing Release section)
     update_project_provisioning( 
       xcodeproj: "Runner.xcodeproj",
-      target_filter: ENV['APP_NAME'], # Name of your project
+      target_filter: ENV['APP_NAME'],
       profile: "app.mobileprovision",
       build_configuration: "Release"
     )
@@ -89,12 +75,30 @@ platform :ios do
       teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
     )
 
-    gym
+    match(
+        app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier), 
+        type: 'appstore', 
+        readonly: is_ci,
+        output_path: ENV["OUTPUT_FILES_PATH"],
+        force_for_new_devices: false,
+        generate_apple_certs: false,
+        fail_on_name_taken: false,
+        keychain_name: TEMP_KEYCHAIN_NAME,
+        keychain_password: TEMP_KEYCHAIN_PASSWORD,
+        verbose: true,
+    )
+
   end
 
   private_lane :build do
     
     puts "build process started..."
+
+    unlock_keychain(
+        set_default: true,
+        path: TEMP_KEYCHAIN_NAME,
+        password: TEMP_KEYCHAIN_PASSWORD
+    )
 
     # Ensure that the git status is clean and no megre head or un-commited code exists
     # ensure_git_status_clean
@@ -106,15 +110,15 @@ platform :ios do
     increment_build_number(xcodeproj: "Runner.xcodeproj")
 
     #Release notes - If empty will show last git commits in the notes
-    if release_notes.empty?
-      # Fetch changelog from Git repo
-      release_notes = changelog_from_git_commits(
-                          commits_count: "10",
-                          pretty: "- (%ae) %s",
-                          date_format: "short",
-                          match_lightweight_tag: false, 
-                          merge_commit_filtering: "exclude_merges")
-    end    
+    # if release_notes.empty?
+    #   # Fetch changelog from Git repo
+    #   release_notes = changelog_from_git_commits(
+    #                       commits_count: "10",
+    #                       pretty: "- (%ae) %s",
+    #                       date_format: "short",
+    #                       match_lightweight_tag: false, 
+    #                       merge_commit_filtering: "exclude_merges")
+    # end    
 
     # Commit the version bump
     # commit_version_bump(xcodeproj: "Runner.xcodeproj")
@@ -126,8 +130,8 @@ platform :ios do
     # Push the new commit and tag back to your git remote
     # push_to_git_remote
 
-    # BUILD APP
-    build_app(
+    # alias for "build_app"
+    gym(
         workspace: "Runner.xcworkspace", 
         scheme: "Runner",
         clean: true,
@@ -143,9 +147,6 @@ platform :ios do
 
     # RUN BUILD LANE
     build
-
-    # GET GIT CHANGELOG
-    # changelog_from_git_commits
     
     # UPLOAD TO TEST FLIGTH
     pilot(
@@ -153,7 +154,7 @@ platform :ios do
       skip_submission: true,
       distribute_external: false,
       notify_external_testers: false,
-      changelog: release_notes
+    #   changelog: release_notes
     )
     
   end

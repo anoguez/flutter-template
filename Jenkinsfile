@@ -21,7 +21,7 @@ pipeline {
         MATCH_KEYCHAIN_PASSWORD = credentials('MATCH_KEYCHAIN_PASSWORD')
 
         FASTLANE_PASSWORD = credentials('FASTLANE_PASSWORD')
-        // FASTLANE_SESSION = credentials('FASTLANE_SESSION')
+        FASTLANE_SESSION = credentials('FASTLANE_SESSION')
         
         TEMP_KEYCHAIN_PASSWORD = credentials('TEMP_KEYCHAIN_PASSWORD')
     }
