@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/router/routes.dart';
 import 'package:flutter_template/src/presentation/common/app_scaffold.dart';
 import 'package:flutter_template/src/presentation/common/popup_menu.dart';
 import 'package:flutter_template/src/presentation/views/home/home.dart';
@@ -13,15 +14,6 @@ import 'package:flutter_template/src/presentation/views/splash_screen.dart';
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
     GlobalKey(debugLabel: 'shell');
-
-class ScreenPaths {
-  static String root = '/';
-  static String splash = '/splash';
-  static String home = '/home';
-  static String screen1 = '/screen1';
-  static String screen2 = '/screen2';
-  static String settings = '/settings';
-}
 
 GoRouter goRouter() => GoRouter(
       navigatorKey: _rootNavigator,
