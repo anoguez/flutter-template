@@ -4,7 +4,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_template/common_libs.dart';
 import 'package:flutter_template/core/services/app_logic.dart';
 import 'package:flutter_template/core/theme/app_theme.dart';
-import 'package:flutter_template/router/go_router.dart';
+import 'package:flutter_template/router/router.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

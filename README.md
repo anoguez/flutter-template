@@ -1,53 +1,47 @@
 ## Getting Started
 
-This project is a starting point for a Flutter application and uses the minimum implementation possible to run an application based on the [Wonderous app](https://github.com/gskinnerTeam/flutter-wonderous-app) built by **gskinner** in partnership with the **Flutter team**
+This project is a starting point for a Flutter application and uses the minimum implementation possible to run an application employing the clean architecture design pattern.
 
+### Project Requirements
 
+- Flutter SDK version 3.4.3 or higher
 
-![Hello World Sample](doc/images/image1.png "Hello World Sample")
+### Clean Architecture with BLoC
 
+This project employs Clean Architecture principles, organizing the code into distinct layers. The BLoC pattern is used within the Presentation Layer to manage the state and business logic related to the UI.
+
+![Clean Architecture flow](doc/images/clean-arch-flow.png "Hello World Sample")
+
+* **Presentation Layer:** This layer comprises the UI, including widgets and screens.  It uses BLoCs to manage the state of individual UI components and to handle user interactions.  The BLoCs interact with Use Cases to fetch and update data.  Examples of this layer's components include screens, widgets, and the BLoCs themselves.
+
+* **Domain Layer:** This layer houses the core business logic and entities, independent of any UI framework or data source. It defines the data models, business rules, and any domain-specific logic.
+
+* **Data Layer:**  This layer handles data access, interacting with local storage (e.g., `SharedPreferences`), remote APIs, or databases. It provides an abstract interface for data retrieval and persistence, hiding implementation details from the Domain Layer.  Repositories are typically used in this layer.
+
+* **Use Cases (Interactors):** These act as the interface between the Presentation and Domain Layers. They encapsulate specific business operations, often triggered by events from the BLoCs.
+
+**BLoC Integration:**
+
+The BLoCs in this project act as the state managers for specific UI components, receiving events from the UI, processing those events via Use Cases, and updating the UI state accordingly. The BLoC's `Output` streams are used to send updated state back to the UI.
 
 
 ### Features
-- Localizations
-- Custom app themes (Colors, Fonts, Sizes)
-- Responsive layout
-- SharedPreferences
-- FlutterHooks
 
-
-
-### Commands
-
-If using VScode, there are 2 pre configured tasks on **./.vscode/tasks.json**
-- flutter pub run build_runner build
-- flutter pub get
-
-
-### Generator
-```dart run build_runner watch```
+* **Internationalization (i18n):** Supports multiple languages via localization files in the `/lib/l10n` folder.
+* **Theming:**  Customizable app themes (colors, fonts, sizes) are defined.  Look at `core/theme/styles.dart` for details.
+* **Responsive Layout:** Designed for adaptability across different screen sizes.
+* **Data Persistence:** Uses `SharedPreferences` for local data storage.
+* **State Management:** Employs `FlutterHooks` for managing application state. (Further details would require inspecting the relevant code files).
+* **Form Handling:** Uses the `reactive_forms` package for reactive form handling.
 
 ### Localizations
 Localization files should be added in the **/lib/l10n** folder
 
 ### Routes
-Routes can be configured in the **router.dart** file
+Routes can be configured in the **router.dart** and **routes.dart** files
 
 
 ### Code Metrics [See More](https://pub.dev/packages/dart_code_metrics)
-
-Reports code metrics, rules and anti-patterns violations.
-```dart run dart_code_metrics:metrics analyze lib```
-
-Checks unused *.dart files.
-```	dart run dart_code_metrics:metrics check-unused-files lib```
-
-Check unused localization in *.dart files.
-```dart run dart_code_metrics:metrics check-unused-l10n lib```
-
-Checks unused code in *.dart files.
-```dart run dart_code_metrics:metrics check-unused-code lib```
-
 
 ### Fastlane
 [Generate new session](https://docs.fastlane.tools/getting-started/ios/authentication/)
@@ -55,3 +49,6 @@ Checks unused code in *.dart files.
 
 Invalidate stored session
 ```rm ~/.fastlane/spaceship/user@email.com/cookie```
+
+### Native Splash Screen
+The native splash screen is configured using flutter_native_splash.yaml. The current settings use a background color and logo image.
