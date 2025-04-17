@@ -2,9 +2,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/core/services/app_logic.dart';
-import 'package:flutter_template/core/theme/app_theme.dart';
-import 'package:flutter_template/router/router.dart';
+import 'package:flutter_template/core/services/app_service.dart';
+import 'package:flutter_template/ui/core/themes/theme.dart';
+import 'package:flutter_template/routing/router.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
