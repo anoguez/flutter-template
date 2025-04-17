@@ -7,7 +7,7 @@ void main() {
     (tester) async {
       // Create the widget by telling the tester to build it.
       await tester.pumpWidget(
-        SizedBox(
+        const SizedBox(
           width: 300,
           height: 300,
         ),

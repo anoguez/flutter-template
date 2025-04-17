@@ -1,10 +1,11 @@
 ## Getting Started
 
-This project is a starting point for a Flutter application and uses the minimum implementation possible to run an application employing the clean architecture design pattern.
+This project is a starting point for a Flutter application and uses the minimum implementation possible to run an application employing the the [recommended architecture design pattern](https://docs.flutter.dev/app-architecture) + [Flutter Bloc](https://pub.dev/packages/flutter_bloc).
 
 ### Project Requirements
 
-- Flutter SDK version 3.4.3 or higher
+- Flutter SDK version 3.29.3 or higher
+- Dart SDK version 3.7.2 or higher
 
 ### Clean Architecture with BLoC
 
@@ -12,13 +13,15 @@ This project employs Clean Architecture principles, organizing the code into dis
 
 ![Clean Architecture flow](doc/images/clean-arch-flow.png "Hello World Sample")
 
-* **Presentation Layer:** This layer comprises the UI, including widgets and screens.  It uses BLoCs to manage the state of individual UI components and to handle user interactions.  The BLoCs interact with Use Cases to fetch and update data.  Examples of this layer's components include screens, widgets, and the BLoCs themselves.
+[Flutter Architecture](https://docs.flutter.dev/app-architecture/guide) 
 
-* **Domain Layer:** This layer houses the core business logic and entities, independent of any UI framework or data source. It defines the data models, business rules, and any domain-specific logic.
+* **UI Layer:** This layer comprises the UI, including widgets and screens.  It uses BLoCs to manage the state of individual UI components and to handle user interactions.  The BLoCs interact with Use Cases to fetch and update data.  Examples of this layer's components include screens, widgets, and the BLoCs themselves.
 
 * **Data Layer:**  This layer handles data access, interacting with local storage (e.g., `SharedPreferences`), remote APIs, or databases. It provides an abstract interface for data retrieval and persistence, hiding implementation details from the Domain Layer.  Repositories are typically used in this layer.
 
 * **Use Cases (Interactors):** These act as the interface between the Presentation and Domain Layers. They encapsulate specific business operations, often triggered by events from the BLoCs.
+
+* **Domain Layer (Optional):** This layer houses the core business logic and entities, independent of any UI framework or data source. It defines the data models, business rules, and any domain-specific logic.
 
 **BLoC Integration:**
 

@@ -11,6 +11,6 @@ export 'package:get_it_mixin/get_it_mixin.dart';
 export 'package:flutter_hooks/flutter_hooks.dart';
 
 export 'package:flutter_template/main.dart';
-export 'package:flutter_template/core/theme/styles.dart';
-export 'package:flutter_template/core/services/settings_logic.dart';
+export 'package:flutter_template/ui/core/themes/styles.dart';
+export 'package:flutter_template/core/services/settings_service.dart';
 export 'package:logging/logging.dart';
