@@ -1,5 +1,5 @@
 import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/src/presentation/common/custom_snackbar.dart';
+import 'package:flutter_template/ui/core/custom_snackbar.dart';
 
 SnackBarController useSnackBar() {
   return use(const _SnackBarController());
