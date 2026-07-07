@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_template/l10n/generated/app_localizations.dart';
 import 'package:flutter_template/common_libs.dart';
 import 'package:flutter_template/core/services/app_service.dart';
 import 'package:intl/intl_standalone.dart';

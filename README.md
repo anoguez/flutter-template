@@ -4,8 +4,8 @@ This project is a starting point for a Flutter application and uses the minimum 
 
 ### Project Requirements
 
-- Flutter SDK version 3.29.3 or higher
-- Dart SDK version 3.7.2 or higher
+- Flutter SDK version 3.41.6 or higher
+- Dart SDK version 3.11.4 or higher
 
 ### Clean Architecture with BLoC
 
@@ -26,6 +26,8 @@ This project employs Clean Architecture principles, organizing the code into dis
 **BLoC Integration:**
 
 The BLoCs in this project act as the state managers for specific UI components, receiving events from the UI, processing those events via Use Cases, and updating the UI state accordingly. The BLoC's `Output` streams are used to send updated state back to the UI.
+
+**Example feature (`lib/ui/todos`):** a fully wired vertical slice showing every layer in practice — `lib/domain/entities`, `lib/domain/repositories`, `lib/domain/usecases`, `lib/data/services`, `lib/data/repositories`, and `lib/ui/todos/bloc`. Errors flow from `data/services` (throws typed exceptions from `core/errors/exceptions.dart`) through `data/repositories` (caught and converted to `Either<Failure, T>` via `core/utils/typedef.dart`) up to the BLoC (`.fold`, mapped to a message via `core/errors/failure_mapper.dart`). It's registered in `config/dependencies.dart` and shown as the "Todos" tab. Use it as the template when adding a real feature, then delete it once you have your own.
 
 
 ### Features

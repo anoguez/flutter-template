@@ -44,6 +44,7 @@ class CustomDropdownField<T, V> extends ReactiveFormField<T, V> {
         super(
           builder: (field) {
             final borderRadiusValue = $styles.corners.xs;
+            final colors = field.context.colors;
 
             final state = field as _ReactiveDropdownFieldState<T, V>;
 
@@ -86,8 +87,8 @@ class CustomDropdownField<T, V> extends ReactiveFormField<T, V> {
                       label ?? "",
                       style: TextStyle(
                         color: field.errorText != null
-                            ? AppColors.error
-                            : Colors.black,
+                            ? colors.error
+                            : colors.onSurface,
                       ),
                     ),
                     if (showTooltipIcon)
@@ -101,25 +102,24 @@ class CustomDropdownField<T, V> extends ReactiveFormField<T, V> {
                   ],
                 ),
                 labelStyle: TextStyle(
-                  color: placeholderColor ?? AppColors.midnightGreen,
+                  color: placeholderColor ?? colors.onSurfaceVariant,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: enabledBorderColor ??
-                        AppColors.midnightGreen.withOpacity(0.4),
+                    color: enabledBorderColor ?? colors.outline,
                   ),
                   borderRadius: BorderRadius.circular(borderRadiusValue),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.midnightGreen),
+                  borderSide: BorderSide(color: colors.primary),
                   borderRadius: BorderRadius.circular(borderRadiusValue),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.error),
+                  borderSide: BorderSide(color: colors.error),
                   borderRadius: BorderRadius.circular(borderRadiusValue),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.error),
+                  borderSide: BorderSide(color: colors.error),
                   borderRadius: BorderRadius.circular(borderRadiusValue),
                 ),
               ),

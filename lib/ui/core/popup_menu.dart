@@ -32,7 +32,7 @@ class PopupMenu extends StatelessWidget {
             children: [
               Icon(
                 Icons.settings,
-                color: Theme.of(context).colorScheme.onSecondary,
+                color: context.colors.onSurfaceVariant,
               ),
               const Text('Settings'),
             ],

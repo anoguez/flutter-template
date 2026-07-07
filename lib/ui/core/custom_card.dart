@@ -14,7 +14,7 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final colorScheme = context.colors;
     return Column(
       children: [
         // HEADER
@@ -23,9 +23,9 @@ class CustomCard extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             color: headerColor ?? colorScheme.primary,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8.r),
-              topRight: Radius.circular(8.r),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(AppBorderRadius.sm),
+              topRight: Radius.circular(AppBorderRadius.sm),
             ),
           ),
           child: Text(
@@ -40,13 +40,13 @@ class CustomCard extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             color: colorScheme.surface,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8.r),
-              bottomRight: Radius.circular(8.r),
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(AppBorderRadius.sm),
+              bottomRight: Radius.circular(AppBorderRadius.sm),
             ),
             boxShadow: [
               BoxShadow(
-                color: colorScheme.onSecondary.withOpacity(0.5),
+                color: colorScheme.shadow.withValues(alpha: 0.5),
                 spreadRadius: 3,
                 blurRadius: 7,
                 offset: const Offset(0, 3),

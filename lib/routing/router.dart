@@ -6,10 +6,10 @@ import 'package:flutter_template/routing/routes.dart';
 import 'package:flutter_template/ui/core/app_scaffold.dart';
 import 'package:flutter_template/ui/core/popup_menu.dart';
 import 'package:flutter_template/ui/home/home.dart';
-import 'package:flutter_template/ui/screen2/screen2.dart';
 import 'package:flutter_template/ui/screen3/screen3.dart';
 import 'package:flutter_template/ui/settings/settings_screen.dart';
 import 'package:flutter_template/ui/splash/splash_screen.dart';
+import 'package:flutter_template/ui/todos/todos_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
@@ -41,7 +41,7 @@ GoRouter goRouter() => GoRouter(
                 key: state.pageKey,
                 pages: const [
                   HomeScreen(key: Key('home screen')),
-                  Screen2(key: Key('Screen2')),
+                  TodosScreen(key: Key('Todos')),
                   Screen3(key: Key('Screen3')),
                 ],
               ),

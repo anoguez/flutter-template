@@ -76,21 +76,21 @@ class _VerticalInsets {
 class _Shadows {
   final textSoft = [
     Shadow(
-      color: Colors.black.withOpacity(.25),
+      color: Colors.black.withValues(alpha: .25),
       offset: const Offset(0, 2),
       blurRadius: 4,
     ),
   ];
   final text = [
     Shadow(
-      color: Colors.black.withOpacity(.6),
+      color: Colors.black.withValues(alpha: .6),
       offset: const Offset(0, 2),
       blurRadius: 2,
     ),
   ];
   final textStrong = [
     Shadow(
-      color: Colors.black.withOpacity(.6),
+      color: Colors.black.withValues(alpha: .6),
       offset: const Offset(0, 4),
       blurRadius: 6,
     ),
