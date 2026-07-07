@@ -10,8 +10,8 @@ class SnackBarController {
 
   SnackBarController(this.context);
 
-  show(String message) {
-    return CustomSnackBar(context: context).show(message);
+  void show(String message) {
+    CustomSnackBar(context: context).show(message);
   }
 }
 

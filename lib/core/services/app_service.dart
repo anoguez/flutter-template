@@ -5,7 +5,7 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_template/common_libs.dart';
 import 'package:flutter_template/config/dependencies.dart';
 import 'package:flutter_template/core/services/locale_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_template/l10n/generated/app_localizations.dart';
 
 final sl = GetIt.instance;
 

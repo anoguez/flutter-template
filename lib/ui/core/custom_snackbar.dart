@@ -5,7 +5,7 @@ class CustomSnackBar {
 
   CustomSnackBar({required this.context});
 
-  show(String message) {
+  void show(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),

@@ -10,14 +10,11 @@ class ColorUtils {
       Color(int.parse(value.substring(1, 7), radix: 16) + 0xFF000000);
 
   static Color blend(Color dst, Color src, double opacity) {
-    return Color.fromARGB(
-      255,
-      (dst.red.toDouble() * (1.0 - opacity) + src.red.toDouble() * opacity)
-          .toInt(),
-      (dst.green.toDouble() * (1.0 - opacity) + src.green.toDouble() * opacity)
-          .toInt(),
-      (dst.blue.toDouble() * (1.0 - opacity) + src.blue.toDouble() * opacity)
-          .toInt(),
+    return Color.from(
+      alpha: 1.0,
+      red: dst.r * (1.0 - opacity) + src.r * opacity,
+      green: dst.g * (1.0 - opacity) + src.g * opacity,
+      blue: dst.b * (1.0 - opacity) + src.b * opacity,
     );
   }
 }

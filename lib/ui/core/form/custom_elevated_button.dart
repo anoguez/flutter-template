@@ -26,17 +26,19 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return ElevatedButton(
       onPressed: () {
         if (onPressed != null) onPressed!();
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryColor ?? AppColors.midnightGreen,
-        disabledBackgroundColor: AppColors.grey3.withOpacity(0.4),
+        backgroundColor: primaryColor ?? colors.primary,
+        shape: borderRadius == null
+            ? null
+            : RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius!.r),
+              ),
         fixedSize: fixedSize,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius ?? 24.r),
-        ),
       ),
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
@@ -48,7 +50,7 @@ class CustomElevatedButton extends StatelessWidget {
             label,
             style: $styles.text.body
                 .copyWith(
-                  color: secondaryColor ?? Colors.white,
+                  color: secondaryColor ?? colors.onPrimary,
                 )
                 .merge(textStyle),
             textAlign: TextAlign.center,

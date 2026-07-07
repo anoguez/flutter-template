@@ -10,7 +10,7 @@ class CustomTextField<T> extends ReactiveFormField<T, T> {
     String? suffixText,
     String? hintText,
     bool? filled = false,
-    Color? fillColor = Colors.black,
+    Color? fillColor,
     Color? labelColor,
     Color? placeholderColor,
     Color? enabledBorderColor,
@@ -29,9 +29,10 @@ class CustomTextField<T> extends ReactiveFormField<T, T> {
   }) : super(
           builder: (field) {
             final borderRadius = $styles.corners.xs;
+            final colors = field.context.colors;
             return ReactiveTextField(
               formControlName: formControlName,
-              cursorColor: AppColors.midnightGreen,
+              cursorColor: colors.primary,
               style: TextStyle(color: labelColor),
               obscureText: obscureText,
               maxLines: maxLines,
@@ -61,8 +62,8 @@ class CustomTextField<T> extends ReactiveFormField<T, T> {
                       label ?? "",
                       style: TextStyle(
                         color: field.touched && field.errorText != null
-                            ? AppColors.error
-                            : Colors.black,
+                            ? colors.error
+                            : colors.onSurface,
                       ),
                     ),
                     if (showTooltipIcon)
@@ -79,25 +80,24 @@ class CustomTextField<T> extends ReactiveFormField<T, T> {
                 suffixText: suffixText,
                 hintText: hintText,
                 labelStyle: TextStyle(
-                  color: placeholderColor ?? AppColors.midnightGreen,
+                  color: placeholderColor ?? colors.onSurfaceVariant,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: enabledBorderColor ??
-                        AppColors.midnightGreen.withOpacity(0.4),
+                    color: enabledBorderColor ?? colors.outline,
                   ),
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.midnightGreen),
+                  borderSide: BorderSide(color: colors.primary),
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.error),
+                  borderSide: BorderSide(color: colors.error),
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.error),
+                  borderSide: BorderSide(color: colors.error),
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
               ),

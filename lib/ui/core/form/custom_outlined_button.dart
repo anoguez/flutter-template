@@ -24,29 +24,32 @@ class CustomOutlinedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return OutlinedButton(
       onPressed: () {
         if (onPressed != null) onPressed!();
       },
       style: OutlinedButton.styleFrom(
         backgroundColor: Colors.transparent,
-        disabledBackgroundColor: AppColors.grey3.withOpacity(0.5),
         fixedSize: fixedSize,
-        side: BorderSide(color: primaryColor ?? AppColors.midnightGreen),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius ?? 24.r),
-        ),
+        side: BorderSide(color: primaryColor ?? colors.primary),
+        shape: borderRadius == null
+            ? null
+            : RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius!.r),
+              ),
       ),
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         spacing: $styles.horizontalInsets.sm,
         children: [
-          if (leadingIcon != null) Icon(leadingIcon, color: primaryColor),
+          if (leadingIcon != null)
+            Icon(leadingIcon, color: primaryColor ?? colors.primary),
           Text(
             label,
             style: $styles.text.body
                 .copyWith(
-                  color: secondaryColor ?? Colors.black,
+                  color: secondaryColor ?? colors.primary,
                 )
                 .merge(textStyle),
             textAlign: TextAlign.center,

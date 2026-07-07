@@ -1,5 +1,3 @@
-library reactive_date_time_picker;
-
 import 'package:flutter_template/common_libs.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 import 'package:reactive_forms/reactive_forms.dart';
@@ -67,6 +65,7 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
               valueAccessor ?? _effectiveValueAccessor(type, dateFormat),
           builder: (field) {
             final borderRadius = $styles.corners.xs;
+            final colors = field.context.colors;
 
             Widget? suffixIcon = decoration?.suffixIcon;
             final isEmptyValue =
@@ -123,29 +122,7 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                         useRootNavigator: useRootNavigator,
                         routeSettings: datePickerRouteSettings,
                         textDirection: textDirection,
-                        builder: (context, child) {
-                          return builder != null
-                              ? builder(context, child)
-                              : Theme(
-                                  data: ThemeData(
-                                    colorScheme: ColorScheme.light(
-                                      primary: AppColors.midnightGreen,
-                                      onPrimary: Colors.white,
-                                      surface: AppColors.midnightGreen,
-                                      onSurface: Colors.black,
-                                    ),
-                                    textTheme: TextTheme(
-                                      titleMedium: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                      ),
-                                    ),
-                                    dialogBackgroundColor: Colors.white,
-                                  ),
-                                  child: child!,
-                                );
-                        },
+                        builder: builder,
                         initialDatePickerMode: initialDatePickerMode,
                         errorFormatText: errorFormatText,
                         errorInvalidText: errorInvalidText,
@@ -156,37 +133,18 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                       );
                     }
 
+                    final fieldContext = field.context;
+                    if (!fieldContext.mounted) return;
+
                     if (type == ReactiveDatePickerFieldType.time ||
                         (type == ReactiveDatePickerFieldType.dateTime &&
                             // there is no need to show timepicker if cancel was pressed on datepicker
                             date != null)) {
                       time = await showTimePicker(
-                        context: field.context,
+                        context: fieldContext,
                         initialTime: (getInitialTime ??
                             _getInitialTime)(field.control.value),
-                        builder: (context, child) {
-                          return builder != null
-                              ? builder(context, child)
-                              : Theme(
-                                  data: ThemeData(
-                                    colorScheme: ColorScheme.light(
-                                      primary: AppColors.midnightGreen,
-                                      onPrimary: Colors.white,
-                                      surface: Colors.white,
-                                      onSurface: Colors.black,
-                                    ),
-                                    textTheme: TextTheme(
-                                      titleMedium: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                      ),
-                                    ),
-                                    dialogBackgroundColor: Colors.white,
-                                  ),
-                                  child: child!,
-                                );
-                        },
+                        builder: builder,
                         useRootNavigator: useRootNavigator,
                         initialEntryMode: timePickerEntryMode,
                         cancelText: cancelText,
@@ -240,8 +198,8 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                             label ?? "",
                             style: TextStyle(
                               color: field.errorText != null
-                                  ? AppColors.error
-                                  : Colors.black,
+                                  ? colors.error
+                                  : colors.onSurface,
                             ),
                           ),
                           if (showTooltipIcon)
@@ -256,26 +214,24 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                         ],
                       ),
                       labelStyle: TextStyle(
-                        color: placeholderColor ?? AppColors.silverPink,
+                        color: placeholderColor ?? colors.onSurfaceVariant,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: enabledBorderColor ??
-                              AppColors.midnightGreen.withOpacity(0.4),
+                          color: enabledBorderColor ?? colors.outline,
                         ),
                         borderRadius: BorderRadius.circular(borderRadius),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: AppColors.midnightGreen),
+                        borderSide: BorderSide(color: colors.primary),
                         borderRadius: BorderRadius.circular(borderRadius),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.error),
+                        borderSide: BorderSide(color: colors.error),
                         borderRadius: BorderRadius.circular(borderRadius),
                       ),
                       errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.error),
+                        borderSide: BorderSide(color: colors.error),
                         borderRadius: BorderRadius.circular(borderRadius),
                       ),
                     ),
@@ -285,8 +241,8 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
                       field.value ?? '',
                       style: TextStyle(
                         color: field.errorText != null
-                            ? AppColors.error
-                            : Colors.black,
+                            ? colors.error
+                            : colors.onSurface,
                       ).merge(style),
                     ),
                   ),

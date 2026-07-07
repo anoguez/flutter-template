@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_template/core/extensions/theme_extension.dart';
 import 'package:flutter_template/ui/core/themes/styles.dart';
 
 class CustomBottomNavigation extends HookWidget {
@@ -23,23 +24,20 @@ class CustomBottomNavigation extends HookWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex.value,
       onTap: setSelectedTab,
-      selectedItemColor: AppColors.red1,
-      backgroundColor: Colors.black,
       selectedLabelStyle: $styles.text.stylish.copyWith(
-        color: AppColors.white1,
+        color: context.colors.primary,
       ),
       unselectedLabelStyle: $styles.text.stylish.copyWith(
-        color: AppColors.white1,
+        color: context.colors.onSurfaceVariant,
       ),
-      type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(
           icon: FaIcon(FontAwesomeIcons.gamepad),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-          label: 'Screen 2',
+          icon: FaIcon(FontAwesomeIcons.listCheck),
+          label: 'Todos',
         ),
         BottomNavigationBarItem(
           icon: FaIcon(FontAwesomeIcons.user),
