@@ -20,14 +20,18 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,
-          disabledBackgroundColor: colorScheme.onSurface.withValues(alpha: 0.12),
+          disabledBackgroundColor: colorScheme.onSurface.withValues(
+            alpha: 0.12,
+          ),
           shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.radiusMd),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: colorScheme.primary,
-          disabledForegroundColor: colorScheme.onSurface.withValues(alpha: 0.38),
+          disabledForegroundColor: colorScheme.onSurface.withValues(
+            alpha: 0.38,
+          ),
           side: BorderSide(color: colorScheme.outline),
           shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.radiusMd),
         ),

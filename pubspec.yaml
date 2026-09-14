@@ -22,7 +22,6 @@ dependencies:
   logging: ^1.2.0
   intl: any
   google_fonts: ^8.1.0
-  font_awesome_flutter: ^11.0.0
   flutter_native_splash: ^2.4.7
   shared_preferences: ^2.5.5
   go_router: ^18.0.1

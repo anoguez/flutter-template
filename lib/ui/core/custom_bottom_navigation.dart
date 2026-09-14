@@ -1,15 +1,17 @@
 import "package:flutter/material.dart";
-import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "package:flutter_template/core/extensions/theme_extension.dart";
 import "package:flutter_template/ui/core/themes/styles.dart";
+import "package:flutter_template/routing/destination.dart";
 
 class CustomBottomNavigation extends StatelessWidget {
   const CustomBottomNavigation({
+    required this.destinations,
     required this.currentIndex,
     required this.onTabSelected,
     super.key,
   });
 
+  final List<AppDestination> destinations;
   final int currentIndex;
   final ValueChanged<int> onTabSelected;
 
@@ -23,19 +25,12 @@ class CustomBottomNavigation extends StatelessWidget {
     unselectedLabelStyle: $styles.text.stylish.copyWith(
       color: context.colors.onSurfaceVariant,
     ),
-    items: const [
-      BottomNavigationBarItem(
-        icon: FaIcon(FontAwesomeIcons.house),
-        label: "Home",
-      ),
-      BottomNavigationBarItem(
-        icon: FaIcon(FontAwesomeIcons.listCheck),
-        label: "Todos",
-      ),
-      BottomNavigationBarItem(
-        icon: FaIcon(FontAwesomeIcons.user),
-        label: "Profile",
-      ),
+    items: [
+      for (final destination in destinations)
+        BottomNavigationBarItem(
+          icon: Icon(destination.icon),
+          label: destination.label,
+        ),
     ],
   );
 }

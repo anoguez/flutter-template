@@ -1,5 +1,7 @@
-import "package:flutter_template/common_libs.dart";
+import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 import "package:flutter_template/routing/routes.dart";
+import "package:flutter_template/routing/destination.dart";
 import "package:flutter_template/ui/core/app_scaffold.dart";
 import "package:flutter_template/ui/home/home.dart";
 import "package:flutter_template/ui/profile/profile_screen.dart";
@@ -11,9 +13,12 @@ final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: "root");
 GoRouter goRouter() => GoRouter(
   navigatorKey: _rootNavigator,
   restorationScopeId: "root",
-  initialLocation: ScreenPaths.home,
+  initialLocation: AppDestination.home.path,
   routes: [
-    GoRoute(path: ScreenPaths.root, redirect: (_, _) => ScreenPaths.home),
+    GoRoute(
+      path: ScreenPaths.root,
+      redirect: (_, _) => AppDestination.home.path,
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           AppScaffold(navigationShell: navigationShell),
@@ -22,7 +27,7 @@ GoRouter goRouter() => GoRouter(
           navigatorKey: GlobalKey<NavigatorState>(debugLabel: "home"),
           routes: [
             GoRoute(
-              path: ScreenPaths.home,
+              path: AppDestination.home.path,
               builder: (_, _) => const HomeScreen(),
             ),
           ],
@@ -31,7 +36,7 @@ GoRouter goRouter() => GoRouter(
           navigatorKey: GlobalKey<NavigatorState>(debugLabel: "todos"),
           routes: [
             GoRoute(
-              path: ScreenPaths.todos,
+              path: AppDestination.todos.path,
               builder: (_, _) => const TodosScreen(),
             ),
           ],
@@ -40,7 +45,7 @@ GoRouter goRouter() => GoRouter(
           navigatorKey: GlobalKey<NavigatorState>(debugLabel: "screen3"),
           routes: [
             GoRoute(
-              path: ScreenPaths.profile,
+              path: AppDestination.profile.path,
               builder: (_, _) => const ProfileScreen(),
             ),
           ],

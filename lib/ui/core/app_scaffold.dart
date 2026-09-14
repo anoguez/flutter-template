@@ -3,6 +3,7 @@ import "package:go_router/go_router.dart";
 import "package:flutter_template/ui/core/custom_bottom_navigation.dart";
 import "package:flutter_template/ui/core/popup_menu.dart";
 import "package:flutter_template/ui/core/themes/styles.dart";
+import "package:flutter_template/routing/destination.dart";
 
 class AppScaffold extends StatelessWidget {
   const AppScaffold({required this.navigationShell, super.key});
@@ -27,6 +28,7 @@ class AppScaffold extends StatelessWidget {
       child: navigationShell,
     ),
     bottomNavigationBar: CustomBottomNavigation(
+      destinations: primaryDestinations,
       currentIndex: navigationShell.currentIndex,
       onTabSelected: _selectTab,
     ),

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/ui/core/presentation.dart';
 import 'package:flutter_template/config/dependencies.dart';
 import 'package:flutter_template/ui/todos/bloc/todos_bloc.dart';
 import 'package:flutter_template/ui/todos/bloc/todos_event.dart';
@@ -27,28 +27,27 @@ class _TodosView extends StatelessWidget {
     return BlocBuilder<TodosBloc, TodosState>(
       builder: (context, state) {
         return switch (state) {
-          TodosInitial() || TodosLoading() =>
-            const Center(child: CircularProgressIndicator()),
+          TodosInitial() ||
+          TodosLoading() => const Center(child: CircularProgressIndicator()),
           TodosError(:final message) => Center(
-              child: Padding(
-                padding: EdgeInsets.all(16.w),
-                child: Text(message, style: $styles.text.body),
-              ),
+            child: Padding(
+              padding: EdgeInsets.all(16.w),
+              child: Text(message, style: $styles.text.body),
             ),
+          ),
           TodosLoaded(:final todos) => ListView.builder(
-              padding: EdgeInsets.symmetric(vertical: 8.h),
-              itemCount: todos.length,
-              itemBuilder: (context, index) {
-                final todo = todos[index];
-                return CheckboxListTile(
-                  title: Text(todo.title, style: $styles.text.body),
-                  value: todo.isCompleted,
-                  onChanged: (_) => context
-                      .read<TodosBloc>()
-                      .add(ToggleTodoRequested(todo)),
-                );
-              },
-            ),
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            itemCount: todos.length,
+            itemBuilder: (context, index) {
+              final todo = todos[index];
+              return CheckboxListTile(
+                title: Text(todo.title, style: $styles.text.body),
+                value: todo.isCompleted,
+                onChanged: (_) =>
+                    context.read<TodosBloc>().add(ToggleTodoRequested(todo)),
+              );
+            },
+          ),
         };
       },
     );

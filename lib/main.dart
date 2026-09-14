@@ -3,8 +3,9 @@ import "dart:async";
 import 'package:flutter_template/l10n/generated/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/core/services/app_service.dart';
+import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:flutter_template/core/services/app_service.dart";
 import 'package:flutter_template/ui/core/themes/theme.dart';
 import 'package:flutter_template/routing/router.dart';
 
@@ -59,25 +60,22 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return ValueListenableBuilder<String>(
-          valueListenable: settingsLogic.themeMode,
-          builder: (context, themeMode, _) => ValueListenableBuilder<String?>(
-            valueListenable: settingsLogic.currentLocale,
-            builder: (context, localeCode, _) => MaterialApp.router(
-              locale: localeCode == null ? null : Locale(localeCode),
-              debugShowCheckedModeBanner: false,
-              routerConfig: appRouter,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              themeMode: ThemeMode.values.byName(themeMode),
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: AppLocalizations.supportedLocales,
-            ),
+        return AnimatedBuilder(
+          animation: preferences,
+          builder: (context, _) => MaterialApp.router(
+            locale: preferences.presentation.locale,
+            debugShowCheckedModeBanner: false,
+            routerConfig: appRouter,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: preferences.presentation.themeMode,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
           ),
         );
       },

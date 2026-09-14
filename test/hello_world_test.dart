@@ -1,21 +1,20 @@
-import "package:flutter_template/core/services/settings_service.dart";
-import "package:test/test.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter_template/core/preferences/application_preferences.dart';
+import 'package:test/test.dart';
 
 void main() {
-  group("SettingsService theme migration", () {
-    test("migrates the legacy dark-mode preference", () {
-      final settings = SettingsService()
-        ..copyFromJson({"isDarkModeEnabled": true});
+  test('migrates legacy dark mode into presentation state', () async {
+    final preferences = ApplicationPreferences(
+      InMemoryApplicationPreferencesStore({'isDarkModeEnabled': true}),
+    );
+    await preferences.restore();
+    expect(preferences.presentation.themeMode, ThemeMode.dark);
+  });
 
-      expect(settings.themeMode.value, "dark");
-    });
-
-    test("persists an explicit theme mode", () async {
-      final settings = SettingsService()..copyFromJson({"themeMode": "system"});
-
-      await settings.setThemeMode("light");
-
-      expect(settings.toJson()["themeMode"], "light");
-    });
+  test('persists an explicit presentation change', () async {
+    final store = InMemoryApplicationPreferencesStore();
+    final preferences = ApplicationPreferences(store);
+    await preferences.setThemeMode(ThemeMode.light);
+    expect((await store.read())['themeMode'], 'light');
   });
 }

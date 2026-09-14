@@ -2,8 +2,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_template/core/errors/failure.dart';
 import 'package:flutter_template/domain/entities/todo.dart';
 import 'package:flutter_template/domain/repositories/todo_repository.dart';
-import 'package:flutter_template/domain/usecases/get_todos.dart';
-import 'package:flutter_template/domain/usecases/toggle_todo.dart';
 import 'package:flutter_template/ui/todos/bloc/todos_bloc.dart';
 import 'package:flutter_template/ui/todos/bloc/todos_event.dart';
 import 'package:flutter_template/ui/todos/bloc/todos_state.dart';
@@ -25,10 +23,7 @@ void main() {
 
   setUp(() {
     repository = _MockTodoRepository();
-    bloc = TodosBloc(
-      getTodos: GetTodos(repository),
-      toggleTodo: ToggleTodo(repository),
-    );
+    bloc = TodosBloc(repository: repository);
   });
 
   tearDown(() => bloc.close());
@@ -52,16 +47,12 @@ void main() {
       'emits [TodosLoading, TodosError] on failure',
       setUp: () {
         when(() => repository.getTodos()).thenAnswer(
-          (_) async =>
-              const Left(APIFailure(message: 'boom', statusCode: 500)),
+          (_) async => const Left(APIFailure(message: 'boom', statusCode: 500)),
         );
       },
       build: () => bloc,
       act: (bloc) => bloc.add(const LoadTodos()),
-      expect: () => [
-        const TodosLoading(),
-        const TodosError('API error: boom'),
-      ],
+      expect: () => [const TodosLoading(), const TodosError('API error: boom')],
     );
   });
 

@@ -1,4 +1,4 @@
-import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/ui/core/presentation.dart';
 
 class CustomCard extends StatelessWidget {
   final String headerLabel;
@@ -30,9 +30,7 @@ class CustomCard extends StatelessWidget {
           ),
           child: Text(
             headerLabel,
-            style: $styles.text.headline.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: $styles.text.headline.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         // BODY
@@ -53,11 +51,8 @@ class CustomCard extends StatelessWidget {
               ),
             ],
           ),
-          child: Padding(
-            padding: EdgeInsets.all(12.w),
-            child: child,
-          ),
-        )
+          child: Padding(padding: EdgeInsets.all(12.w), child: child),
+        ),
       ],
     );
   }

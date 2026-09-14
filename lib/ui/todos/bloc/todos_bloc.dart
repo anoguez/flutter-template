@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/core/errors/failure_mapper.dart';
-import 'package:flutter_template/domain/usecases/get_todos.dart';
-import 'package:flutter_template/domain/usecases/toggle_todo.dart';
+import "package:flutter_template/core/errors/failure_mapper.dart";
+import "package:flutter_template/domain/repositories/todo_repository.dart";
 import 'package:flutter_template/ui/todos/bloc/todos_event.dart';
 import 'package:flutter_template/ui/todos/bloc/todos_state.dart';
 
@@ -9,18 +8,16 @@ import 'package:flutter_template/ui/todos/bloc/todos_state.dart';
 /// pattern wired end-to-end into a BLoC. See lib/domain and lib/data for
 /// the layers this depends on.
 class TodosBloc extends Bloc<TodosEvent, TodosState> {
-  final GetTodos getTodos;
-  final ToggleTodo toggleTodo;
+  final TodoRepository repository;
 
-  TodosBloc({required this.getTodos, required this.toggleTodo})
-    : super(const TodosInitial()) {
+  TodosBloc({required this.repository}) : super(const TodosInitial()) {
     on<LoadTodos>(_onLoadTodos);
     on<ToggleTodoRequested>(_onToggleTodoRequested);
   }
 
   Future<void> _onLoadTodos(LoadTodos event, Emitter<TodosState> emit) async {
     emit(const TodosLoading());
-    final result = await getTodos();
+    final result = await repository.getTodos();
     result.fold(
       (failure) => emit(TodosError(mapFailureToMessage(failure))),
       (todos) => emit(TodosLoaded(todos)),
@@ -34,7 +31,7 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
     final currentState = state;
     if (currentState is! TodosLoaded) return;
 
-    final result = await toggleTodo(event.todo);
+    final result = await repository.toggleTodo(event.todo);
     result.fold(
       (failure) => emit(TodosError(mapFailureToMessage(failure))),
       (updated) => emit(

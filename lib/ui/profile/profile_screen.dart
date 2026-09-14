@@ -1,4 +1,4 @@
-import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/ui/core/presentation.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

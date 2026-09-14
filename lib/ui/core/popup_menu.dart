@@ -1,4 +1,5 @@
-import 'package:flutter_template/common_libs.dart';
+import "package:flutter_template/ui/core/presentation.dart";
+import "package:go_router/go_router.dart";
 import 'package:flutter_template/routing/routes.dart';
 
 class PopupMenu extends StatelessWidget {
@@ -14,21 +15,20 @@ class PopupMenu extends StatelessWidget {
       constraints: BoxConstraints(minWidth: ScreenUtil().screenWidth * 0.8),
       icon: const Icon(Icons.menu),
       onSelected: (_) => context.push(ScreenPaths.settings),
-      itemBuilder:
-          (context) => [
-            PopupMenuItem(
-              value: "menu1",
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: $styles.horizontalInsets.sm,
-                children: [
-                  Icon(Icons.settings, color: context.colors.onSurfaceVariant),
-                  const Text('Settings'),
-                ],
-              ),
-            ),
-          ],
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: "menu1",
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: $styles.horizontalInsets.sm,
+            children: [
+              Icon(Icons.settings, color: context.colors.onSurfaceVariant),
+              const Text('Settings'),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
