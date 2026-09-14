@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:developer' as dev;
+
 import 'package:flutter/services.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:flutter_template/common_libs.dart';
+import "package:flutter/foundation.dart";
+import "package:flutter/material.dart" show Axis;
+import "package:get_it/get_it.dart";
+import "package:logging/logging.dart";
+import "package:flutter_template/core/preferences/application_preferences.dart";
 import 'package:flutter_template/config/dependencies.dart';
-import 'package:flutter_template/core/services/locale_service.dart';
-import 'package:flutter_template/l10n/generated/app_localizations.dart';
 
 final sl = GetIt.instance;
 
@@ -25,6 +28,7 @@ Future<void> init() async {
 
   // Register singletons
   registerSingletons();
+  await preferences.restore();
 
   // Default to only allowing portrait mode
   setDeviceOrientation(Axis.vertical);
@@ -52,7 +56,4 @@ void setDeviceOrientation(Axis? axis) {
   SystemChrome.setPreferredOrientations(orientations);
 }
 
-SettingsService get settingsLogic => GetIt.I.get<SettingsService>();
-LocaleService get localeLogic => GetIt.I.get<LocaleService>();
-
-AppLocalizations get $strings => localeLogic.strings;
+ApplicationPreferences get preferences => GetIt.I.get<ApplicationPreferences>();

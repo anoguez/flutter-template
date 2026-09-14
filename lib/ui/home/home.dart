@@ -1,4 +1,4 @@
-import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/ui/core/presentation.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,12 +8,7 @@ class HomeScreen extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Home Screen',
-            style: $styles.text.body,
-          ),
-        ],
+        children: <Widget>[Text('Home Screen', style: $styles.text.body)],
       ),
     );
   }

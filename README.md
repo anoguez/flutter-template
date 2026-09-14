@@ -4,8 +4,18 @@ This project is a starting point for a Flutter application and uses the minimum 
 
 ### Project Requirements
 
-- Flutter SDK version 3.41.6 or higher
-- Dart SDK version 3.11.4 or higher
+- Flutter SDK version 3.47.0 or higher
+- Dart SDK version 3.13.2 or higher
+
+### Quick start
+
+```bash
+flutter pub get
+flutter analyze
+flutter test
+```
+
+The generated localization source in `lib/l10n/generated/` is intentionally versioned so a fresh checkout can analyze and test immediately. Regenerate it with `flutter gen-l10n` after changing an ARB file.
 
 ### Clean Architecture with BLoC
 

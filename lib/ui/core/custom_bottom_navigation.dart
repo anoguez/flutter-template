@@ -1,49 +1,36 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_template/core/extensions/theme_extension.dart';
-import 'package:flutter_template/ui/core/themes/styles.dart';
+import "package:flutter/material.dart";
+import "package:flutter_template/core/extensions/theme_extension.dart";
+import "package:flutter_template/ui/core/themes/styles.dart";
+import "package:flutter_template/routing/destination.dart";
 
-class CustomBottomNavigation extends HookWidget {
-  final void Function(int)? onTabSelected;
-
+class CustomBottomNavigation extends StatelessWidget {
   const CustomBottomNavigation({
+    required this.destinations,
+    required this.currentIndex,
+    required this.onTabSelected,
     super.key,
-    this.onTabSelected,
   });
 
+  final List<AppDestination> destinations;
+  final int currentIndex;
+  final ValueChanged<int> onTabSelected;
+
   @override
-  Widget build(BuildContext context) {
-    final currentIndex = useState(0);
-
-    final setSelectedTab = useCallback((int index) {
-      currentIndex.value = index;
-      if (onTabSelected != null) onTabSelected!(index);
-    }, []);
-
-    return BottomNavigationBar(
-      currentIndex: currentIndex.value,
-      onTap: setSelectedTab,
-      selectedLabelStyle: $styles.text.stylish.copyWith(
-        color: context.colors.primary,
-      ),
-      unselectedLabelStyle: $styles.text.stylish.copyWith(
-        color: context.colors.onSurfaceVariant,
-      ),
-      items: const [
+  Widget build(BuildContext context) => BottomNavigationBar(
+    currentIndex: currentIndex,
+    onTap: onTabSelected,
+    selectedLabelStyle: $styles.text.stylish.copyWith(
+      color: context.colors.primary,
+    ),
+    unselectedLabelStyle: $styles.text.stylish.copyWith(
+      color: context.colors.onSurfaceVariant,
+    ),
+    items: [
+      for (final destination in destinations)
         BottomNavigationBarItem(
-          icon: FaIcon(FontAwesomeIcons.gamepad),
-          label: 'Home',
+          icon: Icon(destination.icon),
+          label: destination.label,
         ),
-        BottomNavigationBarItem(
-          icon: FaIcon(FontAwesomeIcons.listCheck),
-          label: 'Todos',
-        ),
-        BottomNavigationBarItem(
-          icon: FaIcon(FontAwesomeIcons.user),
-          label: 'Screen 3',
-        ),
-      ],
-    );
-  }
+    ],
+  );
 }

@@ -23,7 +23,10 @@ class TodoServiceImpl implements TodoService {
   @override
   Future<List<TodoModel>> getTodos() async {
     try {
-      final response = await _dio.get('/todos', queryParameters: {'_limit': 20});
+      final response = await _dio.get(
+        '/todos',
+        queryParameters: {'_limit': 20},
+      );
       return (response.data as List)
           .map(
             (item) => TodoModel.fromMap({
@@ -42,7 +45,11 @@ class TodoServiceImpl implements TodoService {
   }
 
   @override
-  Future<TodoModel> toggleTodo(String id, String title, bool isCompleted) async {
+  Future<TodoModel> toggleTodo(
+    String id,
+    String title,
+    bool isCompleted,
+  ) async {
     try {
       await _dio.patch('/todos/$id', data: {'completed': !isCompleted});
       return TodoModel.fromMap({

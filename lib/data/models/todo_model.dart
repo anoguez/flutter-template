@@ -17,16 +17,9 @@ class TodoModel extends Todo {
   }
 
   DataMap toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'isCompleted': isCompleted,
-    };
+    return {'id': id, 'title': title, 'isCompleted': isCompleted};
   }
 
-  factory TodoModel.fromEntity(Todo todo) => TodoModel(
-        id: todo.id,
-        title: todo.title,
-        isCompleted: todo.isCompleted,
-      );
+  factory TodoModel.fromEntity(Todo todo) =>
+      TodoModel(id: todo.id, title: todo.title, isCompleted: todo.isCompleted);
 }

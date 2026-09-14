@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_template/common_libs.dart';
+import "package:flutter/foundation.dart";
 
 class Throttler {
   Throttler(this.interval);

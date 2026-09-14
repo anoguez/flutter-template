@@ -1,12 +1,8 @@
-import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/ui/core/presentation.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 import 'package:reactive_forms/reactive_forms.dart';
 
-enum ReactiveDatePickerFieldType {
-  date,
-  time,
-  dateTime,
-}
+enum ReactiveDatePickerFieldType { date, time, dateTime }
 
 typedef GetInitialDate = DateTime Function(
   DateTime? fieldValue,
@@ -61,196 +57,197 @@ class CustomDateTimePicker extends ReactiveFormField<DateTime, String> {
     TimePickerEntryMode timePickerEntryMode = TimePickerEntryMode.dial,
     RouteSettings? timePickerRouteSettings,
   }) : super(
-          valueAccessor:
-              valueAccessor ?? _effectiveValueAccessor(type, dateFormat),
-          builder: (field) {
-            final borderRadius = $styles.corners.xs;
-            final colors = field.context.colors;
+         valueAccessor:
+             valueAccessor ?? _effectiveValueAccessor(type, dateFormat),
+         builder: (field) {
+           final borderRadius = $styles.corners.xs;
+           final colors = field.context.colors;
 
-            Widget? suffixIcon = decoration?.suffixIcon;
-            final isEmptyValue =
-                field.value == null || field.value?.isEmpty == true;
+           Widget? suffixIcon = decoration?.suffixIcon;
+           final isEmptyValue =
+               field.value == null || field.value?.isEmpty == true;
 
-            if (showClearIcon && !isEmptyValue) {
-              suffixIcon = InkWell(
-                borderRadius: BorderRadius.circular(25),
-                child: clearIcon,
-                onTap: () {
-                  field.control.markAsTouched();
-                  field.didChange(null);
-                },
-              );
-            }
+           if (showClearIcon && !isEmptyValue) {
+             suffixIcon = InkWell(
+               borderRadius: BorderRadius.circular(25),
+               child: clearIcon,
+               onTap: () {
+                 field.control.markAsTouched();
+                 field.didChange(null);
+               },
+             );
+           }
 
-            final InputDecoration effectiveDecoration =
-                (decoration ?? const InputDecoration())
-                    .applyDefaults(Theme.of(field.context).inputDecorationTheme)
-                    .copyWith(suffixIcon: suffixIcon);
+           final InputDecoration effectiveDecoration =
+               (decoration ?? const InputDecoration())
+                   .applyDefaults(Theme.of(field.context).inputDecorationTheme)
+                   .copyWith(suffixIcon: suffixIcon);
 
-            final effectiveValueAccessor =
-                valueAccessor ?? _effectiveValueAccessor(type, dateFormat);
+           final effectiveValueAccessor =
+               valueAccessor ?? _effectiveValueAccessor(type, dateFormat);
 
-            final effectiveLastDate = lastDate ?? DateTime(2100);
+           final effectiveLastDate = lastDate ?? DateTime(2100);
 
-            return IgnorePointer(
-              ignoring: !field.control.enabled,
-              child: Opacity(
-                opacity: field.control.enabled ? 1 : disabledOpacity,
-                child: GestureDetector(
-                  onTap: () async {
-                    DateTime? date;
-                    TimeOfDay? time;
-                    field.control.focus();
-                    field.control.updateValueAndValidity();
+           return IgnorePointer(
+             ignoring: !field.control.enabled,
+             child: Opacity(
+               opacity: field.control.enabled ? 1 : disabledOpacity,
+               child: GestureDetector(
+                 onTap: () async {
+                   DateTime? date;
+                   TimeOfDay? time;
+                   field.control.focus();
+                   field.control.updateValueAndValidity();
 
-                    if (type == ReactiveDatePickerFieldType.date ||
-                        type == ReactiveDatePickerFieldType.dateTime) {
-                      date = await showDatePicker(
-                        context: field.context,
-                        initialDate: (getInitialDate ?? _getInitialDate)(
-                          field.control.value,
-                          effectiveLastDate,
-                        ),
-                        firstDate: firstDate ?? DateTime(1900),
-                        lastDate: effectiveLastDate,
-                        initialEntryMode: datePickerEntryMode,
-                        selectableDayPredicate: selectableDayPredicate,
-                        helpText: helpText,
-                        cancelText: cancelText,
-                        confirmText: confirmText,
-                        locale: locale,
-                        useRootNavigator: useRootNavigator,
-                        routeSettings: datePickerRouteSettings,
-                        textDirection: textDirection,
-                        builder: builder,
-                        initialDatePickerMode: initialDatePickerMode,
-                        errorFormatText: errorFormatText,
-                        errorInvalidText: errorInvalidText,
-                        fieldHintText: fieldHintText,
-                        fieldLabelText: fieldLabelText,
-                        keyboardType: keyboardType,
-                        anchorPoint: anchorPoint,
-                      );
-                    }
+                   if (type == ReactiveDatePickerFieldType.date ||
+                       type == ReactiveDatePickerFieldType.dateTime) {
+                     date = await showDatePicker(
+                       context: field.context,
+                       initialDate: (getInitialDate ?? _getInitialDate)(
+                         field.control.value,
+                         effectiveLastDate,
+                       ),
+                       firstDate: firstDate ?? DateTime(1900),
+                       lastDate: effectiveLastDate,
+                       initialEntryMode: datePickerEntryMode,
+                       selectableDayPredicate: selectableDayPredicate,
+                       helpText: helpText,
+                       cancelText: cancelText,
+                       confirmText: confirmText,
+                       locale: locale,
+                       useRootNavigator: useRootNavigator,
+                       routeSettings: datePickerRouteSettings,
+                       textDirection: textDirection,
+                       builder: builder,
+                       initialDatePickerMode: initialDatePickerMode,
+                       errorFormatText: errorFormatText,
+                       errorInvalidText: errorInvalidText,
+                       fieldHintText: fieldHintText,
+                       fieldLabelText: fieldLabelText,
+                       keyboardType: keyboardType,
+                       anchorPoint: anchorPoint,
+                     );
+                   }
 
-                    final fieldContext = field.context;
-                    if (!fieldContext.mounted) return;
+                   final fieldContext = field.context;
+                   if (!fieldContext.mounted) return;
 
-                    if (type == ReactiveDatePickerFieldType.time ||
-                        (type == ReactiveDatePickerFieldType.dateTime &&
-                            // there is no need to show timepicker if cancel was pressed on datepicker
-                            date != null)) {
-                      time = await showTimePicker(
-                        context: fieldContext,
-                        initialTime: (getInitialTime ??
-                            _getInitialTime)(field.control.value),
-                        builder: builder,
-                        useRootNavigator: useRootNavigator,
-                        initialEntryMode: timePickerEntryMode,
-                        cancelText: cancelText,
-                        confirmText: confirmText,
-                        helpText: helpText,
-                        routeSettings: timePickerRouteSettings,
-                      );
-                    }
+                   if (type == ReactiveDatePickerFieldType.time ||
+                       (type == ReactiveDatePickerFieldType.dateTime &&
+                           // there is no need to show timepicker if cancel was pressed on datepicker
+                           date != null)) {
+                     time = await showTimePicker(
+                       context: fieldContext,
+                       initialTime: (getInitialTime ?? _getInitialTime)(
+                         field.control.value,
+                       ),
+                       builder: builder,
+                       useRootNavigator: useRootNavigator,
+                       initialEntryMode: timePickerEntryMode,
+                       cancelText: cancelText,
+                       confirmText: confirmText,
+                       helpText: helpText,
+                       routeSettings: timePickerRouteSettings,
+                     );
+                   }
 
-                    if (
-                        // if `date` and `time` in `dateTime` mode is not empty...
-                        (type == ReactiveDatePickerFieldType.dateTime &&
-                                (date != null && time != null)) ||
-                            // ... or if `date` in `date` mode is not empty ...
-                            (type == ReactiveDatePickerFieldType.date &&
-                                date != null) ||
-                            // ... or if `time` in `time` mode is not empty ...
-                            (type == ReactiveDatePickerFieldType.time &&
-                                time != null)) {
-                      final dateTime = _combine(date, time);
+                   if (
+                   // if `date` and `time` in `dateTime` mode is not empty...
+                   (type == ReactiveDatePickerFieldType.dateTime &&
+                           (date != null && time != null)) ||
+                       // ... or if `date` in `date` mode is not empty ...
+                       (type == ReactiveDatePickerFieldType.date &&
+                           date != null) ||
+                       // ... or if `time` in `time` mode is not empty ...
+                       (type == ReactiveDatePickerFieldType.time &&
+                           time != null)) {
+                     final dateTime = _combine(date, time);
 
-                      final value = field.control.value;
-                      // ... and new value is not the same as was before...
-                      if (value == null || dateTime.compareTo(value) != 0) {
-                        // ... this means that cancel was not pressed at any moment
-                        // so we can update the field
-                        field.didChange(
-                          effectiveValueAccessor.modelToViewValue(
-                            _combine(date, time),
-                          ),
-                        );
-                      }
-                    }
-                    field.control.unfocus();
-                    field.control.updateValueAndValidity();
-                    field.control.markAsTouched();
-                  },
-                  child: InputDecorator(
-                    decoration: effectiveDecoration.copyWith(
-                      errorText: field.errorText,
-                      enabled: field.control.enabled,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      suffixText: suffixText,
-                      hintText: hintText,
-                      label: Wrap(
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        spacing: $styles.horizontalInsets.xs,
-                        children: [
-                          Text(
-                            label ?? "",
-                            style: TextStyle(
-                              color: field.errorText != null
-                                  ? colors.error
-                                  : colors.onSurface,
-                            ),
-                          ),
-                          if (showTooltipIcon)
-                            Tooltip(
-                              message: label,
-                              triggerMode: TooltipTriggerMode.tap,
-                              preferBelow: true,
-                              verticalOffset: 0,
-                              child:
-                                  tooltipIcon ?? const Icon(Icons.info_outline),
-                            ),
-                        ],
-                      ),
-                      labelStyle: TextStyle(
-                        color: placeholderColor ?? colors.onSurfaceVariant,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: enabledBorderColor ?? colors.outline,
-                        ),
-                        borderRadius: BorderRadius.circular(borderRadius),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: colors.primary),
-                        borderRadius: BorderRadius.circular(borderRadius),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: colors.error),
-                        borderRadius: BorderRadius.circular(borderRadius),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: colors.error),
-                        borderRadius: BorderRadius.circular(borderRadius),
-                      ),
-                    ),
-                    isFocused: field.control.hasFocus,
-                    isEmpty: isEmptyValue,
-                    child: Text(
-                      field.value ?? '',
-                      style: TextStyle(
-                        color: field.errorText != null
-                            ? colors.error
-                            : colors.onSurface,
-                      ).merge(style),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        );
+                     final value = field.control.value;
+                     // ... and new value is not the same as was before...
+                     if (value == null || dateTime.compareTo(value) != 0) {
+                       // ... this means that cancel was not pressed at any moment
+                       // so we can update the field
+                       field.didChange(
+                         effectiveValueAccessor.modelToViewValue(
+                           _combine(date, time),
+                         ),
+                       );
+                     }
+                   }
+                   field.control.unfocus();
+                   field.control.updateValueAndValidity();
+                   field.control.markAsTouched();
+                 },
+                 child: InputDecorator(
+                   decoration: effectiveDecoration.copyWith(
+                     errorText: field.errorText,
+                     enabled: field.control.enabled,
+                     floatingLabelBehavior: FloatingLabelBehavior.always,
+                     suffixText: suffixText,
+                     hintText: hintText,
+                     label: Wrap(
+                       alignment: WrapAlignment.start,
+                       crossAxisAlignment: WrapCrossAlignment.start,
+                       spacing: $styles.horizontalInsets.xs,
+                       children: [
+                         Text(
+                           label ?? "",
+                           style: TextStyle(
+                             color: field.errorText != null
+                                 ? colors.error
+                                 : colors.onSurface,
+                           ),
+                         ),
+                         if (showTooltipIcon)
+                           Tooltip(
+                             message: label,
+                             triggerMode: TooltipTriggerMode.tap,
+                             preferBelow: true,
+                             verticalOffset: 0,
+                             child:
+                                 tooltipIcon ?? const Icon(Icons.info_outline),
+                           ),
+                       ],
+                     ),
+                     labelStyle: TextStyle(
+                       color: placeholderColor ?? colors.onSurfaceVariant,
+                     ),
+                     enabledBorder: OutlineInputBorder(
+                       borderSide: BorderSide(
+                         color: enabledBorderColor ?? colors.outline,
+                       ),
+                       borderRadius: BorderRadius.circular(borderRadius),
+                     ),
+                     focusedBorder: OutlineInputBorder(
+                       borderSide: BorderSide(color: colors.primary),
+                       borderRadius: BorderRadius.circular(borderRadius),
+                     ),
+                     focusedErrorBorder: OutlineInputBorder(
+                       borderSide: BorderSide(color: colors.error),
+                       borderRadius: BorderRadius.circular(borderRadius),
+                     ),
+                     errorBorder: OutlineInputBorder(
+                       borderSide: BorderSide(color: colors.error),
+                       borderRadius: BorderRadius.circular(borderRadius),
+                     ),
+                   ),
+                   isFocused: field.control.hasFocus,
+                   isEmpty: isEmptyValue,
+                   child: Text(
+                     field.value ?? '',
+                     style: TextStyle(
+                       color: field.errorText != null
+                           ? colors.error
+                           : colors.onSurface,
+                     ).merge(style),
+                   ),
+                 ),
+               ),
+             ),
+           );
+         },
+       );
 
   static DateTimeValueAccessor _effectiveValueAccessor(
     ReactiveDatePickerFieldType fieldType,

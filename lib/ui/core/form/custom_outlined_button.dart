@@ -1,4 +1,4 @@
-import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/ui/core/presentation.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
   const CustomOutlinedButton({
@@ -48,9 +48,7 @@ class CustomOutlinedButton extends StatelessWidget {
           Text(
             label,
             style: $styles.text.body
-                .copyWith(
-                  color: secondaryColor ?? colors.primary,
-                )
+                .copyWith(color: secondaryColor ?? colors.primary)
                 .merge(textStyle),
             textAlign: TextAlign.center,
           ),

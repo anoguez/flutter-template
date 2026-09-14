@@ -1,4 +1,4 @@
-import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/ui/core/presentation.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
@@ -45,13 +45,11 @@ class CustomElevatedButton extends StatelessWidget {
         spacing: $styles.horizontalInsets.sm,
         children: [
           if (leadingIcon != null) Icon(leadingIcon),
-          if (leadingIconImage != null) leadingIconImage!,
+          if (leadingIconImage case final Widget image) image,
           Text(
             label,
             style: $styles.text.body
-                .copyWith(
-                  color: secondaryColor ?? colors.onPrimary,
-                )
+                .copyWith(color: secondaryColor ?? colors.onPrimary)
                 .merge(textStyle),
             textAlign: TextAlign.center,
           ),

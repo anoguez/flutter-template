@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:flutter_template/common_libs.dart';
+import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_template/ui/core/themes/typography.dart';
 
 export 'colors.dart';

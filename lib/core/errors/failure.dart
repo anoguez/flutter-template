@@ -15,12 +15,12 @@ class APIFailure extends Failure {
   const APIFailure({required super.message, required super.statusCode});
 
   APIFailure.fromException(APIException exception)
-      : this(message: exception.message, statusCode: exception.statusCode);
+    : this(message: exception.message, statusCode: exception.statusCode);
 }
 
 class UnknownFailure extends Failure {
   const UnknownFailure({required super.message, super.statusCode = 500});
 
   UnknownFailure.fromException(Object exception)
-      : this(message: exception.toString());
+    : this(message: exception.toString());
 }

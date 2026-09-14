@@ -1,17 +1,26 @@
-import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:flutter_template/ui/core/custom_bottom_navigation.dart";
+import "package:flutter_template/routing/destination.dart";
 
 void main() {
-  testWidgets(
-    'MyWidget has a title and message',
-    (tester) async {
-      // Create the widget by telling the tester to build it.
-      await tester.pumpWidget(
-        const SizedBox(
-          width: 300,
-          height: 300,
+  testWidgets("bottom navigation reports the selected tab", (tester) async {
+    int? selectedIndex;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          bottomNavigationBar: CustomBottomNavigation(
+            destinations: primaryDestinations,
+            currentIndex: 0,
+            onTabSelected: (index) => selectedIndex = index,
+          ),
         ),
-      );
-    },
-  );
+      ),
+    );
+
+    await tester.tap(find.text("Todos"));
+
+    expect(selectedIndex, 1);
+  });
 }

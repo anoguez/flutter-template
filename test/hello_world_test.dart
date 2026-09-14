@@ -1,17 +1,20 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_template/core/preferences/application_preferences.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Dart 3 - New features', () {
-    test('RECORDS', () {
-      (String, int) userInfo(Map<String, dynamic> json) {
-        return (json['name'] as String, json['height'] as int);
-      }
+  test('migrates legacy dark mode into presentation state', () async {
+    final preferences = ApplicationPreferences(
+      InMemoryApplicationPreferencesStore({'isDarkModeEnabled': true}),
+    );
+    await preferences.restore();
+    expect(preferences.presentation.themeMode, ThemeMode.dark);
+  });
 
-      final (String name, int height) =
-          userInfo({'name': 'Anderson', 'height': 176});
-
-      expect(name, "Anderson");
-      expect(height, 176);
-    });
+  test('persists an explicit presentation change', () async {
+    final store = InMemoryApplicationPreferencesStore();
+    final preferences = ApplicationPreferences(store);
+    await preferences.setThemeMode(ThemeMode.light);
+    expect((await store.read())['themeMode'], 'light');
   });
 }

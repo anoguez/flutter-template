@@ -1,4 +1,4 @@
-import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/ui/core/presentation.dart';
 
 class CustomSnackBar {
   final BuildContext context;
@@ -10,9 +10,7 @@ class CustomSnackBar {
       SnackBar(
         content: Text(message),
         backgroundColor: Colors.amber,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.r),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
         behavior: SnackBarBehavior.floating,
       ),
     );

@@ -1,7 +1,6 @@
-import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/core/services/app_service.dart';
+import 'package:flutter_template/ui/core/presentation.dart';
+import "package:flutter_template/core/services/app_service.dart";
 import 'package:flutter_template/ui/core/custom_card.dart';
-import 'package:flutter_template/ui/core/form/custom_switch.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -9,26 +8,33 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Settings"),
-      ),
+      appBar: AppBar(title: const Text("Settings")),
       body: Padding(
         padding: EdgeInsets.all(8.w),
         child: CustomCard(
-          headerLabel: "ABC",
+          headerLabel: "Appearance",
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Dark Mode"),
-                  CustomSwitch(
-                    formControlName: 'isDarkModeEnabled',
-                    onChanged: (value) =>
-                        settingsLogic.enableDarkModeEnabled(value),
-                  ),
-                ],
-              )
+              AnimatedBuilder(
+                animation: preferences,
+                builder: (context, _) => DropdownButtonFormField<String>(
+                  initialValue: preferences.presentation.themeMode.name,
+                  decoration: const InputDecoration(labelText: 'Theme'),
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'system',
+                      child: Text('System default'),
+                    ),
+                    DropdownMenuItem(value: 'light', child: Text('Light')),
+                    DropdownMenuItem(value: 'dark', child: Text('Dark')),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      preferences.setThemeMode(ThemeMode.values.byName(value));
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),
