@@ -1,17 +1,21 @@
-import 'package:test/test.dart';
+import "package:flutter_template/core/services/settings_service.dart";
+import "package:test/test.dart";
 
 void main() {
-  group('Dart 3 - New features', () {
-    test('RECORDS', () {
-      (String, int) userInfo(Map<String, dynamic> json) {
-        return (json['name'] as String, json['height'] as int);
-      }
+  group("SettingsService theme migration", () {
+    test("migrates the legacy dark-mode preference", () {
+      final settings = SettingsService()
+        ..copyFromJson({"isDarkModeEnabled": true});
 
-      final (String name, int height) =
-          userInfo({'name': 'Anderson', 'height': 176});
+      expect(settings.themeMode.value, "dark");
+    });
 
-      expect(name, "Anderson");
-      expect(height, 176);
+    test("persists an explicit theme mode", () async {
+      final settings = SettingsService()..copyFromJson({"themeMode": "system"});
+
+      await settings.setThemeMode("light");
+
+      expect(settings.toJson()["themeMode"], "light");
     });
   });
 }

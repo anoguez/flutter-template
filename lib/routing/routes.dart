@@ -1,8 +1,11 @@
 abstract final class ScreenPaths {
-  static String root = '/';
-  static String splash = '/splash';
-  static String home = '/home';
-  static String screen1 = '/screen1';
-  static String screen2 = '/screen2';
-  static String settings = '/settings';
+  static const root = '/';
+  static const splash = '/splash';
+  static const home = '/home';
+  static const todos = '/todos';
+  static const profile = '/profile';
+  static const settings = '/settings';
+
+  // Backward-compatible alias for existing routes.
+  static const screen1 = settings;
 }

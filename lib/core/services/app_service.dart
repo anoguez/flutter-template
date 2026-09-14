@@ -25,6 +25,8 @@ Future<void> init() async {
 
   // Register singletons
   registerSingletons();
+  await settingsLogic.load();
+  await localeLogic.load();
 
   // Default to only allowing portrait mode
   setDeviceOrientation(Axis.vertical);

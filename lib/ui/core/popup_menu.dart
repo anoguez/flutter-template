@@ -1,9 +1,8 @@
 import 'package:flutter_template/common_libs.dart';
+import 'package:flutter_template/routing/routes.dart';
 
 class PopupMenu extends StatelessWidget {
-  const PopupMenu({
-    super.key,
-  });
+  const PopupMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,31 +13,22 @@ class PopupMenu extends StatelessWidget {
       ),
       constraints: BoxConstraints(minWidth: ScreenUtil().screenWidth * 0.8),
       icon: const Icon(Icons.menu),
-      onSelected: (value) {
-        // TODO: fix me
-        // PersistentNavBarNavigator.pushNewScreen(
-        //   context,
-        //   screen: const SettingsScreen(),
-        //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
-        // );
-      },
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: "menu1",
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: $styles.horizontalInsets.sm,
-            children: [
-              Icon(
-                Icons.settings,
-                color: context.colors.onSurfaceVariant,
+      onSelected: (_) => context.push(ScreenPaths.settings),
+      itemBuilder:
+          (context) => [
+            PopupMenuItem(
+              value: "menu1",
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: $styles.horizontalInsets.sm,
+                children: [
+                  Icon(Icons.settings, color: context.colors.onSurfaceVariant),
+                  const Text('Settings'),
+                ],
               ),
-              const Text('Settings'),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ],
     );
   }
 }

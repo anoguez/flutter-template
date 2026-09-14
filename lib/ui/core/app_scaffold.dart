@@ -1,43 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_template/ui/core/themes/styles.dart';
-import 'package:flutter_template/ui/core/custom_bottom_navigation.dart';
+import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
+import "package:flutter_template/ui/core/custom_bottom_navigation.dart";
+import "package:flutter_template/ui/core/popup_menu.dart";
+import "package:flutter_template/ui/core/themes/styles.dart";
 
-class AppScaffold extends HookWidget {
-  final Widget? child;
-  final List<Widget> pages;
+class AppScaffold extends StatelessWidget {
+  const AppScaffold({required this.navigationShell, super.key});
 
-  const AppScaffold({
-    required this.pages,
-    super.key,
-    this.child,
-  });
+  final StatefulNavigationShell navigationShell;
 
-  @override
-  Widget build(BuildContext context) {
-    final pageController = usePageController();
-    final currentIndex = useState(0);
-
-    final selectTab = useCallback((int index) {
-      if (index == currentIndex.value) return;
-
-      currentIndex.value = index;
-      pageController.jumpToPage(currentIndex.value);
-    }, []);
-
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppColors.greyFade,
-        ),
-        child: PageView(
-          controller: pageController,
-          children: pages,
-        ),
-      ),
-      bottomNavigationBar: CustomBottomNavigation(
-        onTabSelected: selectTab,
-      ),
+  void _selectTab(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
     );
   }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(
+      title: const Text("Flutter Template"),
+      actions: const [PopupMenu()],
+    ),
+    body: DecoratedBox(
+      decoration: BoxDecoration(gradient: AppColors.greyFade),
+      child: navigationShell,
+    ),
+    bottomNavigationBar: CustomBottomNavigation(
+      currentIndex: navigationShell.currentIndex,
+      onTabSelected: _selectTab,
+    ),
+  );
 }

@@ -1,132 +1,56 @@
-import 'dart:async';
+import "package:flutter_template/common_libs.dart";
+import "package:flutter_template/routing/routes.dart";
+import "package:flutter_template/ui/core/app_scaffold.dart";
+import "package:flutter_template/ui/home/home.dart";
+import "package:flutter_template/ui/profile/profile_screen.dart";
+import "package:flutter_template/ui/settings/settings_screen.dart";
+import "package:flutter_template/ui/todos/todos_screen.dart";
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_template/common_libs.dart';
-import 'package:flutter_template/routing/routes.dart';
-import 'package:flutter_template/ui/core/app_scaffold.dart';
-import 'package:flutter_template/ui/core/popup_menu.dart';
-import 'package:flutter_template/ui/home/home.dart';
-import 'package:flutter_template/ui/screen3/screen3.dart';
-import 'package:flutter_template/ui/settings/settings_screen.dart';
-import 'package:flutter_template/ui/splash/splash_screen.dart';
-import 'package:flutter_template/ui/todos/todos_screen.dart';
-
-final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
-final GlobalKey<NavigatorState> _shellNavigator =
-    GlobalKey(debugLabel: 'shell');
+final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: "root");
 
 GoRouter goRouter() => GoRouter(
-      navigatorKey: _rootNavigator,
-      initialLocation: ScreenPaths.root,
-      redirect: _handleRedirect,
-      routes: [
-        AppRoute(ScreenPaths.splash, (_) => const SplashScreen()),
-
-        // SHELL ROUTES
-        ShellRoute(
-          navigatorKey: _shellNavigator,
-          builder: (context, state, child) => Scaffold(
-            appBar: AppBar(
-              title: const Text("Test"),
-              actions: const [
-                PopupMenu(),
-              ],
-            ),
-            body: child,
-          ),
+  navigatorKey: _rootNavigator,
+  restorationScopeId: "root",
+  initialLocation: ScreenPaths.home,
+  routes: [
+    GoRoute(path: ScreenPaths.root, redirect: (_, _) => ScreenPaths.home),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) =>
+          AppScaffold(navigationShell: navigationShell),
+      branches: [
+        StatefulShellBranch(
+          navigatorKey: GlobalKey<NavigatorState>(debugLabel: "home"),
           routes: [
-            AppRoute(
-              ScreenPaths.root,
-              (state) => AppScaffold(
-                key: state.pageKey,
-                pages: const [
-                  HomeScreen(key: Key('home screen')),
-                  TodosScreen(key: Key('Todos')),
-                  Screen3(key: Key('Screen3')),
-                ],
-              ),
-              useTransitionAnimation: false,
-            ),
-            AppRoute(
-              ScreenPaths.home,
-              (state) => HomeScreen(key: state.pageKey),
-              useTransitionAnimation: false,
-            ),
-            AppRoute(
-              ScreenPaths.screen1,
-              (state) => SettingsScreen(key: state.pageKey),
-              useTransitionAnimation: false,
+            GoRoute(
+              path: ScreenPaths.home,
+              builder: (_, _) => const HomeScreen(),
             ),
           ],
-          observers: const [],
+        ),
+        StatefulShellBranch(
+          navigatorKey: GlobalKey<NavigatorState>(debugLabel: "todos"),
+          routes: [
+            GoRoute(
+              path: ScreenPaths.todos,
+              builder: (_, _) => const TodosScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: GlobalKey<NavigatorState>(debugLabel: "screen3"),
+          routes: [
+            GoRoute(
+              path: ScreenPaths.profile,
+              builder: (_, _) => const ProfileScreen(),
+            ),
+          ],
         ),
       ],
-    );
-
-class AppRoute extends GoRoute {
-  AppRoute(
-    String path,
-    Widget Function(GoRouterState s) builder, {
-    List<GoRoute> super.routes = const [],
-    bool useFade = false,
-    bool useTransitionAnimation = true,
-    super.parentNavigatorKey,
-  }) : super(
-          path: path,
-          name: path,
-          pageBuilder: (context, state) {
-            final pageContent = Scaffold(
-              body: builder(state),
-            );
-            if (!useTransitionAnimation) {
-              return NoTransitionPage(
-                key: state.pageKey,
-                child: pageContent,
-                name: state.name,
-              );
-            }
-
-            if (useFade) {
-              return CustomTransitionPage(
-                key: state.pageKey,
-                child: pageContent,
-                name: state.name,
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-              );
-            }
-            return CupertinoPage(
-              child: pageContent,
-              name: state.name,
-            );
-          },
-        );
-}
-
-FutureOr<String?> _handleRedirect(
-  BuildContext context,
-  GoRouterState state,
-) async {
-  // Prevent anyone from navigating away from `/` if app is starting up.
-  // if (!appLogic.isBootstrapComplete && state.fullPath != ScreenPaths.splash) {
-  //   return ScreenPaths.splash;
-  // }
-  debugPrint('Navigate to: ${state.fullPath}');
-
-  // final authRepository = ref.read(authRepositoryProvider);
-  // final authSession = await authRepository.getAuthData();
-
-  // TODO: fixme
-  // if (appLogic.isBootstrapComplete &&
-  //     !authSession.isSignedIn &&
-  //     ![
-  //       ScreenPaths.webview,
-  //       ScreenPaths.onboarding,
-  //     ].contains(state.location)) {
-  //   return ScreenPaths.login;
-  // }
-
-  return null; // do nothing
-}
+    ),
+    GoRoute(
+      path: ScreenPaths.settings,
+      parentNavigatorKey: _rootNavigator,
+      builder: (_, _) => const SettingsScreen(),
+    ),
+  ],
+);

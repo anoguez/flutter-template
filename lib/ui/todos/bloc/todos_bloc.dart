@@ -9,22 +9,18 @@ import 'package:flutter_template/ui/todos/bloc/todos_state.dart';
 /// pattern wired end-to-end into a BLoC. See lib/domain and lib/data for
 /// the layers this depends on.
 class TodosBloc extends Bloc<TodosEvent, TodosState> {
-  final GetTodos _getTodos;
-  final ToggleTodo _toggleTodo;
+  final GetTodos getTodos;
+  final ToggleTodo toggleTodo;
 
-  TodosBloc({
-    required GetTodos getTodos,
-    required ToggleTodo toggleTodo,
-  })  : _getTodos = getTodos,
-        _toggleTodo = toggleTodo,
-        super(const TodosInitial()) {
+  TodosBloc({required this.getTodos, required this.toggleTodo})
+    : super(const TodosInitial()) {
     on<LoadTodos>(_onLoadTodos);
     on<ToggleTodoRequested>(_onToggleTodoRequested);
   }
 
   Future<void> _onLoadTodos(LoadTodos event, Emitter<TodosState> emit) async {
     emit(const TodosLoading());
-    final result = await _getTodos();
+    final result = await getTodos();
     result.fold(
       (failure) => emit(TodosError(mapFailureToMessage(failure))),
       (todos) => emit(TodosLoaded(todos)),
@@ -38,7 +34,7 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
     final currentState = state;
     if (currentState is! TodosLoaded) return;
 
-    final result = await _toggleTodo(event.todo);
+    final result = await toggleTodo(event.todo);
     result.fold(
       (failure) => emit(TodosError(mapFailureToMessage(failure))),
       (updated) => emit(
